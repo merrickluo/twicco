@@ -1,0 +1,76 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'realm-android'
+apply plugin: 'io.fabric'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.1"
+    defaultConfig {
+        applicationId "ninja.luois.twicco"
+        minSdkVersion 21
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:25.0.1'
+    compile 'com.android.support:recyclerview-v7:25.0.1'
+
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+    compile 'io.reactivex:rxkotlin:0.60.0'
+
+    compile 'com.jakewharton.rxbinding:rxbinding-kotlin:1.0.0'
+    compile 'com.jakewharton.rxbinding:rxbinding-support-v4-kotlin:1.0.0'
+    compile 'com.jakewharton.rxbinding:rxbinding-appcompat-v7-kotlin:1.0.0'
+    compile 'com.jakewharton.rxbinding:rxbinding-recyclerview-v7-kotlin:1.0.0'
+
+    compile 'com.trello:rxlifecycle-components:1.0'
+    compile 'com.trello:rxlifecycle-kotlin:1.0'
+
+    compile 'com.squareup.picasso:picasso:2.5.2'
+
+    compile('com.twitter.sdk.android:twitter-core:2.2.0@aar') {
+        transitive = true;
+    }
+
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+
+    testCompile 'junit:junit:4.12'
+}
+repositories {
+    jcenter()
+    mavenCentral()
+    maven { url 'https://maven.fabric.io/public' }
+}
+
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    dependencies {
+        // These docs use an open ended version so that our plugin
+        // can be updated quickly in response to Android tooling updates
+
+        // We recommend changing it to the latest version from our changelog:
+        // https://docs.fabric.io/android/changelog.html#fabric-gradle-plugin
+        classpath 'io.fabric.tools:gradle:1.22.0'
+    }
+}
