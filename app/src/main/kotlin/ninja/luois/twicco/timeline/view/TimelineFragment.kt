@@ -3,6 +3,7 @@ package ninja.luois.twicco.timeline.view
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,6 +24,8 @@ class TimelineFragment : Fragment() {
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val root = inflater?.inflate(R.layout.fragment_timeline, container, false)!!
+        listView = root.findViewById(R.id.list_timeline) as RecyclerView
+
         return root
     }
 
