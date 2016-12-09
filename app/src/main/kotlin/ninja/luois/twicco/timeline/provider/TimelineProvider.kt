@@ -4,7 +4,6 @@ import com.twitter.sdk.android.core.TwitterCore
 import com.twitter.sdk.android.core.models.Tweet
 import com.twitter.sdk.android.core.services.StatusesService
 import rx.Observable
-import rx.Scheduler
 import rx.Subscriber
 import rx.lang.kotlin.observable
 import rx.schedulers.Schedulers
@@ -26,12 +25,14 @@ class TimelineProvider {
     fun homeTimeline_(): Observable<List<Tweet>> {
         return tlObservable { s ->
             try {
-                val results = service.homeTimeline(null, null, null, null, null, null, null)
+                val resp = service.homeTimeline(100, null, null, null, null, null, null)
                         .execute()
-                        .body()
-
-                s.onNext(results)
-                s.onCompleted()
+                if (resp.isSuccessful) {
+                    s.onNext(resp.body())
+                    s.onCompleted()
+                } else {
+                    s.onError(Exception(resp.errorBody().string()))
+                }
             } catch (tr: Throwable) {
                 s.onError(tr)
             }

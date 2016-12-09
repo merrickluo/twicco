@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:background="@color/colorPrimaryDark"
     android:layout_height="wrap_content">
 
     <ImageView
@@ -24,7 +25,7 @@
             android:text="A.I."
             android:id="@+id/text_name"
             android:textSize="12sp"
-            android:textColor="@android:color/darker_gray"
+            android:textColor="@android:color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -61,23 +62,97 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+
+    <RelativeLayout
+        android:id="@+id/layout_quote"
+        android:layout_alignStart="@id/text_tweet"
+        android:background="@drawable/shape_quote_tweet"
+        android:paddingTop="4dp"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="4dp"
+        android:paddingBottom="8dp"
+        android:layout_below="@id/text_tweet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:id="@+id/layout_quote_id"
+            android:layout_width="match_parent"
+            android:layout_marginStart="8dp"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="A.I."
+                android:id="@+id/text_quote_name"
+                android:textSize="12sp"
+                android:textColor="@android:color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:textColor="@android:color/darker_gray"
+                android:text="\@merrick_luo"
+                android:id="@+id/text_quote_id"
+                android:layout_marginStart="4dp"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:layout_toEndOf="@id/text_quote_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:text="1h"
+                android:visibility="gone"
+                android:layout_marginEnd="8dp"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="12sp"
+                android:layout_alignParentEnd="true"
+                android:id="@+id/text_quote_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+        <TextView
+            android:text="This is a long tweet xsldkfjaslkdfjlaskdfjlaskjf;askdfja;lskdfjla;skfjlaskdfjalsdjflaskdfjlaskdfj"
+            android:id="@+id/text_quote_tweet"
+            android:textColor="@android:color/white"
+            android:layout_alignStart="@id/layout_quote_id"
+            android:layout_marginEnd="8dp"
+            android:layout_below="@id/layout_quote_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
     <TextView
         android:text="via twicco"
         android:textColor="@android:color/darker_gray"
         android:layout_alignStart="@id/layout_id"
-        android:layout_below="@id/text_tweet"
+        android:layout_below="@id/layout_quote"
         android:textSize="12sp"
         android:layout_marginTop="4dp"
         android:id="@+id/text_via"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+    <TextView
+        android:text="retweeted by A.I. and 233 others"
+        android:id="@+id/text_retweet"
+        android:layout_below="@id/text_via"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="8dp"
+        android:textSize="12sp"
+        android:textColor="@android:color/darker_gray"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <View
         android:id="@+id/sp_line"
-        android:layout_below="@id/text_via"
+        android:layout_below="@id/text_retweet"
         android:background="@color/colorPrimary"
         android:layout_width="match_parent"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="8dp"
         android:layout_height="0.5dp" />
 
     <View
