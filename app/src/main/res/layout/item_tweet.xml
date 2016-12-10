@@ -159,7 +159,7 @@
 
     <View
         android:id="@+id/view_color_label"
-        android:background="@android:color/holo_green_light"
+        android:background="@android:color/darker_gray"
         android:layout_width="8dp"
         android:layout_alignParentTop="true"
         android:layout_alignBottom="@id/sp_line"

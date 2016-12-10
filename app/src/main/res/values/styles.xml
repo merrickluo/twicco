@@ -9,4 +9,17 @@
         <item name="actionBarSize">32dp</item>
     </style>
 
+    <!-- ToolBar -->
+    <style name="ToolBarStyle" parent="Theme.AppCompat">
+        <item name="android:textAppearance">@style/TitleStyle</item>
+        <!--<item name="actionOverflowButtonStyle">@style/ActionButtonOverflowStyle</item>-->
+        <!--<item name="drawerArrowStyle">@style/DrawerArrowStyle</item>-->
+    </style>
+
+    <style name="TitleStyle" parent="android:style/TextAppearance">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>

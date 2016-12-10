@@ -33,7 +33,10 @@ class TweetViewModel(val rawTweet: Tweet) {
     }
 
     val avatarUrl: String
-        get() = showingTweet.user.profileImageUrlHttps
+        get() {
+            val small = showingTweet.user.profileImageUrlHttps
+            return small.replace("_normal", "_bigger")
+        }
 
     val id: String
         get() = showingTweet.displayID()
