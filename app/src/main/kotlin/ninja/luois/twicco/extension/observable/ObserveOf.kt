@@ -1,8 +1,6 @@
-package me.youchai.yoc.support.util.rx
+package ninja.luois.twicco.extension.observable
 
-import rx.Observable
-import rx.Observer
-import rx.Subscription
+import rx.*
 
 /**
  * Created by Abner on 15/11/20.
@@ -95,3 +93,24 @@ class ObserveCompletedOf<T>(val onCompleted: () -> Unit) : Observer<T> {
     }
 }
 
+fun <T> Single<T>.subscribeTo(init: SingleOf<T>.() -> Unit): Subscription {
+    return this.subscribe(SingleOf(init))
+}
+
+class SingleOf<T>(init: SingleOf<T>.() -> Unit) : SingleSubscriber<T>() {
+    var success: ((T) -> Unit)? = null
+    var error: ((Throwable) -> Unit)? = null
+
+    init {
+        init(this)
+    }
+
+    override fun onSuccess(value: T) {
+        success?.invoke(value)
+    }
+
+    override fun onError(tr: Throwable?) {
+        error?.invoke(tr ?: Exception("Unknown error"))
+    }
+
+}
