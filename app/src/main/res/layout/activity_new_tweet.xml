@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="8dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:text="140"
+        android:id="@+id/text_tweet_count"
+        android:layout_marginStart="8dp"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:layout_alignParentEnd="true"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp" />
+
+    <RelativeLayout
+        android:id="@+id/layout_buttons"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/button_image"
+            android:layout_width="36dp"
+            android:layout_height="36dp" />
+
+        <Button
+            android:layout_toEndOf="@id/button_image"
+            android:id="@+id/button_location"
+            android:layout_width="36dp"
+            android:layout_height="36dp" />
+
+        <Button
+            android:id="@+id/button_tweet"
+            android:text="Tweet"
+            android:layout_alignParentEnd="true"
+            android:textSize="12sp"
+            android:layout_width="64dp"
+            android:layout_height="36dp" />
+
+    </RelativeLayout>
+
+
+    <EditText
+        android:id="@+id/text_tweet"
+        android:gravity="top"
+        android:scrollHorizontally="false"
+        android:textColor="@android:color/white"
+        android:layout_toStartOf="@id/text_tweet_count"
+        android:layout_above="@id/layout_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:inputType="text" />
+
+
+</RelativeLayout>
