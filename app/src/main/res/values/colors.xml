@@ -2,5 +2,8 @@
 <resources>
     <color name="colorPrimary">#000000</color>
     <color name="colorPrimaryDark">#212121</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#303030</color>
+    <color name="buttonDisabled">#505050</color>
+    <color name="buttonSelected">#303030</color>
+    <color name="buttonNormal">#ffffff</color>
 </resources>

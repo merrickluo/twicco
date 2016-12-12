@@ -2,6 +2,8 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="26dp"
     android:height="26dp"
+    android:tintMode="multiply"
+    android:tint="@color/icon_selectable"
     android:viewportWidth="24"
     android:viewportHeight="24">
 
@@ -12,12 +14,12 @@
                 android:translateX="149.000000"
                 android:translateY="72.000000">
             <path
-                android:fillColor="#EEEEEE"
+                android:fillColor="@color/buttonNormal"
                 android:fillType="evenOdd"
                 android:strokeWidth="1"
                 android:pathData="M 12 0 C 18.627416998 0 24 5.37258300203 24 12 C 24 18.627416998 18.627416998 24 12 24 C 5.37258300203 24 0 18.627416998 0 12 C 0 5.37258300203 5.37258300203 0 12 0 Z" />
             <path
-                android:fillColor="#303030"
+                android:fillColor="@color/buttonSelected"
                 android:fillType="evenOdd"
                 android:strokeWidth="1"
                 android:pathData="M19.714526,11.779596 C19.6356531,13.1497373 19.2412948,14.2311136
