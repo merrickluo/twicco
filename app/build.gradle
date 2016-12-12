@@ -23,6 +23,12 @@ android {
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
+
+    // FIXME: enable this after usable version?
+    lintOptions {
+        abortOnError false
+    }
+
 }
 
 dependencies {
@@ -51,6 +57,9 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+
+    compile 'com.google.code.findbugs:jsr305:3.0.1'
+    androidTestCompile 'com.google.code.findbugs:jsr305:3.0.1'
 
     testCompile 'junit:junit:4.12'
 }
