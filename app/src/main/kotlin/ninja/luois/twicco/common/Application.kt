@@ -7,13 +7,14 @@ import io.fabric.sdk.android.Fabric
 import ninja.luois.twicco.R
 
 class Application : Application() {
-    private val TWITTER_KEY = getString(R.string.twitter_key)
-    private val TWITTER_SECRET = getString(R.string.twitter_secret)
 
     override fun onCreate() {
         super.onCreate()
 
-        val config = TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET)
+        val config = TwitterAuthConfig(
+                getString(R.string.twitter_key),
+                getString(R.string.twitter_secret))
+
         Fabric.with(this, TwitterCore(config))
     }
 }
