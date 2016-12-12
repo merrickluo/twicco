@@ -23,6 +23,12 @@ android {
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
+
+    // FIXME: enable this after usable version?
+    lintOptions {
+        abortOnError false
+    }
+
 }
 
 dependencies {
