@@ -4,11 +4,11 @@ import android.app.Application
 import com.twitter.sdk.android.core.TwitterAuthConfig
 import com.twitter.sdk.android.core.TwitterCore
 import io.fabric.sdk.android.Fabric
+import ninja.luois.twicco.R
 
 class Application : Application() {
-    // Note: Your consumer key and secret should be obfuscated in your source code before shipping.
-    private val TWITTER_KEY = ""
-    private val TWITTER_SECRET = ""
+    private val TWITTER_KEY = getString(R.string.twitter_key)
+    private val TWITTER_SECRET = getString(R.string.twitter_secret)
 
     override fun onCreate() {
         super.onCreate()
