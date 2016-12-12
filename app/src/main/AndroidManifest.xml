@@ -27,6 +27,9 @@
 
         <activity android:name=".home.view.MainActivity"/>
 
+        <activity android:name=".compose.view.NewTweetActivity"
+            android:windowSoftInputMode="adjustResize"/>
+
     </application>
 
 </manifest>

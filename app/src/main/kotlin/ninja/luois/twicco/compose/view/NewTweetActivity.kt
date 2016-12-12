@@ -12,9 +12,7 @@ import ninja.luois.twicco.common.Activity
 import ninja.luois.twicco.compose.provider.NewTweetProvider
 import ninja.luois.twicco.extension.observable.subscribeTo
 import ninja.luois.twicco.extension.observable.withDialog
-import rx.Observable
 import rx.android.schedulers.AndroidSchedulers
-import java.util.concurrent.TimeUnit
 
 private fun String.isValidTweet(): Boolean {
     return isNotEmpty() && length < 140;
