@@ -15,7 +15,7 @@ fun Tweet.displayText(): String {
             end += 1
         }
     }
-    return text.substring(start, end)
+    return text.substring(0, end)
 }
 
 
