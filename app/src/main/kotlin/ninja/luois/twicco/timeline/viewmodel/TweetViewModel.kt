@@ -67,6 +67,11 @@ class TweetViewModel(val rawTweet: Tweet) {
             }
         }
 
+    val imageUrls: List<String>
+        get() {
+            return rawTweet.entities.media.map { it.mediaUrlHttps }
+        }
+
     val via: String
         get() {
             val regex = Regex("<a\\b[^>]*>(.*?)</a>")
@@ -98,6 +103,9 @@ class TweetViewModel(val rawTweet: Tweet) {
         get() {
             if (rawTweet.quotedStatus != null) {
                 return Type.Quote
+            }
+            if (rawTweet.entities?.media != null) {
+                return Type.Image
             }
             return Type.Normal
         }

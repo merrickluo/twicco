@@ -8,6 +8,7 @@ import kotterknife.bindView
 import ninja.luois.twicco.R
 
 class ImageTweetViewHolder(view: View) : TweetViewHolder(view) {
+    val image1View: ImageView by bindView(R.id.image1)
 }
 
 class QuoteTweetViewHolder(view: View) : TweetViewHolder(view) {

@@ -9,6 +9,7 @@ import android.widget.FrameLayout
 import com.squareup.picasso.Picasso
 import com.twitter.sdk.android.core.models.Tweet
 import ninja.luois.twicco.R
+import ninja.luois.twicco.timeline.view.ImageTweetViewHolder
 import ninja.luois.twicco.timeline.view.QuoteTweetViewHolder
 import ninja.luois.twicco.timeline.view.TweetViewHolder
 
@@ -39,6 +40,13 @@ class TweetAdapter(val context: Context) : RecyclerView.Adapter<TweetViewHolder>
         }
     }
 
+    private fun bindImageViewHolder(holder: ImageTweetViewHolder, vm: TweetViewModel) {
+        val url = vm.imageUrls.first()
+        Picasso.with(context)
+                .load(url)
+                .into(holder.image1View)
+    }
+
     override fun onBindViewHolder(holder: TweetViewHolder?, position: Int) {
         if (holder == null) return
         val vm = TweetViewModel(tweets[position])
@@ -47,6 +55,9 @@ class TweetAdapter(val context: Context) : RecyclerView.Adapter<TweetViewHolder>
         when (getItemViewType(position)) {
             TweetViewModel.Type.Quote.value -> {
                 bindQuoteViewHolder(holder as QuoteTweetViewHolder, vm)
+            }
+            TweetViewModel.Type.Image.value -> {
+                bindImageViewHolder(holder as ImageTweetViewHolder, vm)
             }
         }
     }
@@ -62,7 +73,11 @@ class TweetAdapter(val context: Context) : RecyclerView.Adapter<TweetViewHolder>
 
         return when (viewType) {
             TweetViewModel.Type.Image.value -> {
-                TweetViewHolder(view)
+                val mediaView = inflater.inflate(R.layout.item_tweet_images, parent, false)
+                val container = view.findViewById(R.id.layout_quote) as FrameLayout
+                container.visibility = View.VISIBLE
+                container.addView(mediaView)
+                ImageTweetViewHolder(view)
             }
             TweetViewModel.Type.Quote.value -> {
                 val quote = inflater.inflate(R.layout.item_quote_tweet, parent, false)
