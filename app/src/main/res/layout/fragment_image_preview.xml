@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:text="Add images (Max 4)"
+        android:id="@+id/text_title"
+        android:padding="12dp"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:textColor="@android:color/black"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/image_preview_grid"
+        android:layout_below="@id/text_title"
+        android:layout_width="match_parent"
+        android:layout_height="100dp" />
+
+    <Button
+        android:text="Take a photo"
+        android:id="@+id/button_camera"
+        android:textColor="@android:color/black"
+        android:background="@drawable/bg_text_button"
+        android:layout_below="@id/image_preview_grid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:text="Pick from gallery"
+        android:id="@+id/button_gallery"
+        android:textColor="@android:color/black"
+        android:background="@drawable/bg_text_button"
+        android:layout_below="@id/button_camera"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

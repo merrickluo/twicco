@@ -5,17 +5,17 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:text="140"
         android:id="@+id/text_tweet_count"
-        android:layout_marginStart="8dp"
         android:textStyle="bold"
         android:textSize="16sp"
-        android:textColor="@android:color/white"
+        android:textColor="@color/text_disablable"
         android:layout_alignParentEnd="true"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp" />
+        android:layout_marginStart="8dp"
+        android:layout_width="32dp"
+        android:layout_height="wrap_content" />
 
     <RelativeLayout
+        android:layout_marginStart="8dp"
         android:id="@+id/layout_buttons"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
@@ -25,9 +25,10 @@
             android:background="@android:color/transparent"
             android:drawableStart="@drawable/ic_select_image"
             android:id="@+id/button_image"
-            android:textColor="@color/color_button"
+            android:textAllCaps="false"
+            android:textColor="@color/image_button"
             android:layout_width="48dp"
-            android:layout_height="48dp" />
+            android:layout_height="wrap_content" />
 
         <Button
             android:visibility="gone"
@@ -41,14 +42,12 @@
             android:drawableStart="@drawable/ic_send"
             android:id="@+id/button_tweet"
             android:text="Tweet"
-            android:textColor="@color/color_button"
+            android:textColor="@color/image_button"
             android:layout_alignParentEnd="true"
             android:textSize="12sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-
     </RelativeLayout>
-
 
     <EditText
         android:background="@drawable/shape_new_tweet"
@@ -61,6 +60,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:inputType="textMultiLine" />
+
+    <!-- placeholder for reply tweet -->
+    <FrameLayout
+        android:visibility="gone"
+        android:layout_alignEnd="@id/text_tweet"
+        android:layout_alignBottom="@id/text_tweet"
+        android:background="@android:color/holo_red_dark"
+        android:id="@+id/reply_tweet_view"
+        android:layout_width="120dp"
+        android:layout_height="120dp" />
 
 
 </RelativeLayout>
