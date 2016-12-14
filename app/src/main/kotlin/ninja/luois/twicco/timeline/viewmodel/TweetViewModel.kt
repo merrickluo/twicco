@@ -27,6 +27,10 @@ class TweetViewModel(val rawTweet: Tweet) {
     val dateFormat: DateFormat
     val showingTweet: Tweet
 
+    enum class Type(val value: Int) {
+        Normal(0), Image(1), Quote(2)
+    }
+
     init {
         dateFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss ZZZZZ yyyy", Locale.ROOT)
         showingTweet = rawTweet.retweetedStatus ?: rawTweet
@@ -88,6 +92,14 @@ class TweetViewModel(val rawTweet: Tweet) {
     val retweet: String
         get() {
             return "Retweeted by ${rawTweet.user.name} and ${rawTweet.retweetCount} others"
+        }
+
+    val type: Type
+        get() {
+            if (rawTweet.quotedStatus != null) {
+                return Type.Quote
+            }
+            return Type.Normal
         }
 }
 
