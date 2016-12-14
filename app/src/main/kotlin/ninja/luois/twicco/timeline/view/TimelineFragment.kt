@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
 import com.twitter.sdk.android.core.models.Tweet
-import me.youchai.yoc.support.util.rx.subscribeTo
+import ninja.luois.twicco.extension.observable.subscribeTo
 import ninja.luois.twicco.R
 import ninja.luois.twicco.common.Fragment
 import ninja.luois.twicco.timeline.provider.TimelineProvider
