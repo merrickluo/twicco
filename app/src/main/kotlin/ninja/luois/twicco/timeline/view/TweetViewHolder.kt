@@ -1,5 +1,6 @@
 package ninja.luois.twicco.timeline.view
 
+import android.opengl.Visibility
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.ImageView
@@ -8,7 +9,20 @@ import kotterknife.bindView
 import ninja.luois.twicco.R
 
 class ImageTweetViewHolder(view: View) : TweetViewHolder(view) {
-    val image1View: ImageView by bindView(R.id.image1)
+    private val image1View: ImageView by bindView(R.id.image1)
+    private val image2View: ImageView by bindView(R.id.image2)
+    private val image3View: ImageView by bindView(R.id.image3)
+    private val image4View: ImageView by bindView(R.id.image4)
+
+    fun imageViewAt(position: Int): ImageView? {
+        return when (position) {
+            0 -> image1View
+            1 -> image2View
+            2 -> image3View
+            3 -> image4View
+            else -> null
+        }
+    }
 }
 
 class QuoteTweetViewHolder(view: View) : TweetViewHolder(view) {

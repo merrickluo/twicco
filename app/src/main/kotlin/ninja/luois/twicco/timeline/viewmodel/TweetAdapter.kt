@@ -42,18 +42,30 @@ class TweetAdapter(val context: Context) : RecyclerView.Adapter<TweetViewHolder>
     }
 
     private fun bindImageViewHolder(holder: ImageTweetViewHolder, vm: TweetViewModel) {
-        val url = vm.imageUrls.first()
-        Picasso.with(context)
-                .load(url)
-                .into(holder.image1View)
+        for (i in 0..3) {
+            if (i < vm.imageUrls.size) {
+                holder.imageViewAt(i)?.visibility = View.VISIBLE
+            } else {
+                holder.imageViewAt(i)?.visibility = View.GONE
+            }
+        }
 
-        holder.image1View.clicks()
-                .subscribe {
-                    val ms = vm.imageUrls.map(::Media)
-                    val fm = (context as Activity).fragmentManager
-                    MediaPreviewDialog(ms)
-                            .show(fm, "media preview")
-                }
+        vm.imageUrls.forEachIndexed { i, url ->
+            holder.imageViewAt(i)?.let { imageView ->
+
+                Picasso.with(context)
+                        .load(url)
+                        .into(imageView)
+
+                imageView.clicks()
+                        .subscribe {
+                            val ms = vm.imageUrls.map(::Media)
+                            val fm = (context as Activity).fragmentManager
+                            MediaPreviewDialog(ms, i)
+                                    .show(fm, "media preview")
+                        }
+            }
+        }
     }
 
     override fun onBindViewHolder(holder: TweetViewHolder?, position: Int) {

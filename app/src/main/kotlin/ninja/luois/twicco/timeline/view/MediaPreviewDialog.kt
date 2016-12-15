@@ -19,7 +19,7 @@ import ninja.luois.twicco.R
 import ninja.luois.twicco.common.DialogFragment
 
 
-class MediaPreviewDialog(val medias: List<Media>) : DialogFragment() {
+class MediaPreviewDialog(val medias: List<Media>, val position: Int) : DialogFragment() {
 
     val counterView: TextView by bindView(R.id.text_media_counter)
     val pager: ViewPager by bindView(R.id.view_pager_media)
@@ -70,6 +70,7 @@ class MediaPreviewDialog(val medias: List<Media>) : DialogFragment() {
             }
 
         })
+        pager.setCurrentItem(position)
     }
 }
 

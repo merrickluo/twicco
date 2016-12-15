@@ -1,12 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.percent.PercentRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="160dp">
 
     <ImageView
         android:id="@+id/image1"
+        android:padding="2dp"
         android:scaleType="centerCrop"
-        android:layout_width="match_parent"
-        android:layout_height="120dp" />
+        android:layout_toStartOf="@+id/image2"
+        android:layout_above="@+id/image4"
+        app:layout_widthPercent="100%"
+        app:layout_heightPercent="100%" />
 
-</RelativeLayout>
+    <ImageView
+        android:id="@+id/image2"
+        android:padding="2dp"
+        android:scaleType="centerCrop"
+        android:layout_alignParentEnd="true"
+        android:layout_above="@+id/image3"
+        app:layout_widthPercent="50%"
+        app:layout_heightPercent="100%" />
+
+    <ImageView
+        android:id="@+id/image3"
+        android:padding="2dp"
+        android:scaleType="centerCrop"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        app:layout_widthPercent="50%"
+        app:layout_heightPercent="50%" />
+
+    <ImageView
+        android:id="@+id/image4"
+        android:padding="2dp"
+        android:scaleType="centerCrop"
+        android:layout_alignParentBottom="true"
+        app:layout_widthPercent="50%"
+        app:layout_heightPercent="50%" />
+
+
+</android.support.percent.PercentRelativeLayout>
