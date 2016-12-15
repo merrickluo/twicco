@@ -1,21 +1,43 @@
 package ninja.luois.twicco.timeline.viewmodel
 
+import android.graphics.Color
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import com.twitter.sdk.android.core.models.Tweet
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-fun Tweet.displayText(): String {
-    val start = displayTextRange[0]
+private fun SpannableString.setLinkSpan(start: Int, end: Int) {
+    setSpan(ForegroundColorSpan(Color.parseColor("#4286f4")), start, end,
+            SpannableString.SPAN_INCLUSIVE_EXCLUSIVE)
+}
+
+fun Tweet.displayText(): CharSequence {
+    val sb = SpannableString(text)
+    //hashtag
+    entities.hashtags?.forEach {
+        sb.setLinkSpan(it.start, it.end)
+    }
+    entities.media?.forEach {
+        sb.setLinkSpan(it.start, it.end)
+    }
+    entities.urls?.forEach {
+        sb.setLinkSpan(it.start, it.end)
+    }
+    entities.userMentions?.forEach {
+        sb.setLinkSpan(it.start, it.end)
+    }
+
     var end = displayTextRange[1]
 
     // some unicode has 2 char and twitter count as 1
-    if (end < text.length) {
-        if (Character.isLowSurrogate(text[end])) {
+    if (end < sb.length) {
+        if (Character.isLowSurrogate(sb[end])) {
             end += 1
         }
     }
-    return text.substring(0, end)
+    return sb.subSequence(0, end)
 }
 
 
@@ -48,7 +70,7 @@ class TweetViewModel(val rawTweet: Tweet) {
     val name: String
         get() = showingTweet.user.name
 
-    val text: String
+    val text: CharSequence
         get() = showingTweet.displayText()
 
     val time: String
@@ -88,7 +110,7 @@ class TweetViewModel(val rawTweet: Tweet) {
     val quoteName: String
         get() = rawTweet.quotedStatus!!.user.name
 
-    val quoteTweet: String
+    val quoteTweet: CharSequence
         get() = rawTweet.quotedStatus!!.displayText()
 
     val hasRetweet: Boolean
