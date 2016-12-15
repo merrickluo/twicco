@@ -6,12 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import com.jakewharton.rxbinding.view.clicks
 import com.squareup.picasso.Picasso
+import com.trello.rxlifecycle.kotlin.bindToLifecycle
 import com.twitter.sdk.android.core.models.Tweet
 import ninja.luois.twicco.R
-import ninja.luois.twicco.timeline.view.ImageTweetViewHolder
-import ninja.luois.twicco.timeline.view.QuoteTweetViewHolder
-import ninja.luois.twicco.timeline.view.TweetViewHolder
+import ninja.luois.twicco.common.Activity
+import ninja.luois.twicco.timeline.view.*
 
 class TweetAdapter(val context: Context) : RecyclerView.Adapter<TweetViewHolder>() {
     var tweets: List<Tweet> = emptyList()
@@ -45,6 +46,14 @@ class TweetAdapter(val context: Context) : RecyclerView.Adapter<TweetViewHolder>
         Picasso.with(context)
                 .load(url)
                 .into(holder.image1View)
+
+        holder.image1View.clicks()
+                .subscribe {
+                    val ms = vm.imageUrls.map(::Media)
+                    val fm = (context as Activity).fragmentManager
+                    MediaPreviewDialog(ms)
+                            .show(fm, "media preview")
+                }
     }
 
     override fun onBindViewHolder(holder: TweetViewHolder?, position: Int) {

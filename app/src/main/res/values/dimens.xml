@@ -4,4 +4,5 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <dimen name="new_tweet_preview_image_size">100dp</dimen>
+    <dimen name="padding_medium">8dp</dimen>
 </resources>

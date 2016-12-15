@@ -69,7 +69,7 @@ class TweetViewModel(val rawTweet: Tweet) {
 
     val imageUrls: List<String>
         get() {
-            return rawTweet.entities.media.map { it.mediaUrlHttps }
+            return rawTweet.extendedEtities.media.map { it.mediaUrlHttps }
         }
 
     val via: String
