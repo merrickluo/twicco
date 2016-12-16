@@ -14,7 +14,11 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
+import com.facebook.drawee.backends.pipeline.Fresco
+import com.facebook.drawee.drawable.ScalingUtils
+import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder
 import com.facebook.drawee.view.SimpleDraweeView
+import com.facebook.imagepipeline.request.ImageRequest
 import kotterknife.bindView
 import ninja.luois.twicco.R
 import ninja.luois.twicco.common.DialogFragment
@@ -100,11 +104,19 @@ class MediaViewPagerAdapter(val ctx: Context,
                 ViewGroup.LayoutParams.MATCH_PARENT)
 
         imageView.setPadding(padding, padding, padding, padding)
-        imageView.scaleType = ImageView.ScaleType.FIT_CENTER
         imageView.setBackgroundColor(Color.TRANSPARENT)
 
+        imageView.hierarchy = GenericDraweeHierarchyBuilder(ctx.resources)
+                .setActualImageScaleType(ScalingUtils.ScaleType.FIT_CENTER)
+                .build()
+
         val m = medias[position]
-        imageView.setImageURI(Uri.parse("${m.url}:large"), ctx)
+
+        imageView.controller = Fresco.newDraweeControllerBuilder()
+                .setLowResImageRequest(ImageRequest.fromUri(Uri.parse(m.url)))
+                .setImageRequest(ImageRequest.fromUri(Uri.parse("${m.url}:orig")))
+                .setOldController(imageView.controller)
+                .build()
 
         imageView.setOnClickListener { clickAction() }
 

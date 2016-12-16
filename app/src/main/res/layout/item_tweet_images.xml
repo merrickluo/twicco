@@ -9,7 +9,7 @@
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/image1"
-        android:scaleType="centerCrop"
+        tools:actualScaleType="centerCrop"
         android:layout_toStartOf="@+id/image2"
         android:layout_above="@+id/image4"
         app:layout_widthPercent="100%"
@@ -19,7 +19,7 @@
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/image2"
         android:layout_marginStart="4dp"
-        android:scaleType="centerCrop"
+        tools:actualScaleType="centerCrop"
         android:layout_alignParentEnd="true"
         android:layout_above="@+id/image3"
         app:layout_widthPercent="50%"
@@ -29,7 +29,7 @@
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/image3"
         android:layout_marginTop="4dp"
-        android:scaleType="centerCrop"
+        tools:actualScaleType="centerCrop"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         app:layout_widthPercent="50%"
@@ -40,7 +40,7 @@
         android:id="@+id/image4"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="4dp"
-        android:scaleType="centerCrop"
+        tools:actualScaleType="centerCrop"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         android:layout_toStartOf="@id/image3"
