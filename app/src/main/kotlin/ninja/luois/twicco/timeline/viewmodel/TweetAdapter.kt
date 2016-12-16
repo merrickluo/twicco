@@ -56,6 +56,19 @@ class TweetAdapter(val ctx: Context) : RecyclerView.Adapter<TweetViewHolder>() {
             holder.quoteIdView.text = vm.quoteId
             holder.quoteNameView.text = vm.quoteName
             holder.quoteTweetView.text = vm.quoteTweet
+
+            holder.quoteImageView.visibility = View.GONE
+            vm.quoteImageUrls.firstOrNull()?.let {
+                holder.quoteImageView.visibility = View.VISIBLE
+                holder.quoteImageView.setImageURI(Uri.parse(it), ctx)
+                holder.quoteImageView.clicks()
+                        .subscribe {
+                            val ms = vm.quoteImageUrls.map(::Media)
+                            val fm = (ctx as Activity).fragmentManager
+                            MediaPreviewDialog(ms)
+                                    .show(fm, "media preview")
+                        }
+            }
         }
     }
 

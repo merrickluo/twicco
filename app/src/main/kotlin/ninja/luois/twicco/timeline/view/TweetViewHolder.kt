@@ -31,6 +31,7 @@ class QuoteTweetViewHolder(view: View) : TweetViewHolder(view) {
     val quoteIdView: TextView by bindView(R.id.text_quote_id)
     val quoteTimeView: TextView by bindView(R.id.text_quote_time)
     val quoteTweetView: TextView by bindView(R.id.text_quote_tweet)
+    val quoteImageView: SimpleDraweeView by bindView(R.id.image_quote_tweet)
 
     init {
         val m = quoteTweetView.movementMethod

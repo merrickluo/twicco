@@ -147,6 +147,11 @@ class TweetViewModel(val rawTweet: Tweet) {
             linkAction?.invoke(type, text)
         }
 
+    val quoteImageUrls: List<String>
+        get () {
+            return rawTweet.quotedStatus!!.extendedEtities.media.map { it.mediaUrlHttps }
+        }
+
     val hasRetweet: Boolean
         get() = rawTweet.retweetedStatus != null
 
