@@ -32,8 +32,14 @@ class TweetAdapter(val ctx: Context) : RecyclerView.Adapter<TweetViewHolder>() {
         holder.nameView.text = vm.name
         holder.idView.text = vm.id
         holder.timeView.text = vm.time
-        holder.tweetView.text = vm.text
         holder.viaView.text = vm.via
+        holder.tweetView.text = vm.text
+
+        if (vm.text.isNullOrBlank()) {
+            holder.tweetView.visibility = View.GONE
+        } else {
+            holder.tweetView.visibility = View.VISIBLE
+        }
 
         if (vm.hasRetweet) {
             holder.retweetView.visibility = View.VISIBLE

@@ -124,7 +124,13 @@ class TweetViewModel(val rawTweet: Tweet) {
         get() {
             val regex = Regex("<a\\b[^>]*>(.*?)</a>")
             val result = regex.find(showingTweet.source)
-            return "via ${result?.groupValues?.get(1) ?: ""}"
+
+            val text = "via ${result?.groupValues?.get(1) ?: ""}"
+            if (!rawTweet.inReplyToScreenName.isNullOrBlank()) {
+                return "$text in reply to @${rawTweet.inReplyToScreenName}"
+            } else {
+                return text
+            }
         }
 
     val hasQuote: Boolean
