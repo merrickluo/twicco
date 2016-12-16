@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Bundle
 import android.support.v4.view.PagerAdapter
 import android.support.v4.view.ViewPager
@@ -13,7 +14,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
-import com.squareup.picasso.Picasso
+import com.facebook.drawee.view.SimpleDraweeView
 import kotterknife.bindView
 import ninja.luois.twicco.R
 import ninja.luois.twicco.common.DialogFragment
@@ -93,7 +94,7 @@ class MediaViewPagerAdapter(val ctx: Context,
         val padding = ctx.resources.getDimensionPixelSize(
                 R.dimen.padding_medium)
 
-        val imageView = ImageView(ctx)
+        val imageView = SimpleDraweeView(ctx)
         imageView.layoutParams = ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT)
@@ -103,9 +104,7 @@ class MediaViewPagerAdapter(val ctx: Context,
         imageView.setBackgroundColor(Color.TRANSPARENT)
 
         val m = medias[position]
-        Picasso.with(ctx)
-                .load("${m.url}:large")
-                .into(imageView)
+        imageView.setImageURI(Uri.parse("${m.url}:large"), ctx)
 
         imageView.setOnClickListener { clickAction() }
 

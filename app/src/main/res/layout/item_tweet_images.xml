@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="160dp">
 
-    <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/image1"
         android:scaleType="centerCrop"
         android:layout_toStartOf="@+id/image2"
@@ -16,7 +16,7 @@
         app:layout_heightPercent="100%"
         tools:ignore="ContentDescription" />
 
-    <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/image2"
         android:layout_marginStart="4dp"
         android:scaleType="centerCrop"
@@ -26,7 +26,7 @@
         app:layout_heightPercent="100%"
         tools:ignore="ContentDescription" />
 
-    <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/image3"
         android:layout_marginTop="4dp"
         android:scaleType="centerCrop"
@@ -36,7 +36,7 @@
         app:layout_heightPercent="50%"
         tools:ignore="ContentDescription" />
 
-    <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/image4"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="4dp"

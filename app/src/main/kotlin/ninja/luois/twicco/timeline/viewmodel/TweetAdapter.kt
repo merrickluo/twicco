@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import com.jakewharton.rxbinding.view.clicks
-import com.squareup.picasso.Picasso
 import com.twitter.sdk.android.core.models.Tweet
 import ninja.luois.twicco.R
 import ninja.luois.twicco.common.Activity
@@ -29,7 +28,7 @@ class TweetAdapter(val ctx: Context) : RecyclerView.Adapter<TweetViewHolder>() {
     }
 
     private fun bindNormalViewHolder(holder: TweetViewHolder, vm: TweetViewModel) {
-        Picasso.with(ctx).load(vm.avatarUrl).into(holder.avatarView)
+        holder.avatarView.setImageURI(Uri.parse(vm.avatarUrl), ctx)
         holder.nameView.text = vm.name
         holder.idView.text = vm.id
         holder.timeView.text = vm.time
@@ -66,9 +65,7 @@ class TweetAdapter(val ctx: Context) : RecyclerView.Adapter<TweetViewHolder>() {
         vm.imageUrls.forEachIndexed { i, url ->
             holder.imageViewAt(i)?.let { imageView ->
 
-                Picasso.with(ctx)
-                        .load(url)
-                        .into(imageView)
+                imageView.setImageURI(Uri.parse(url), ctx)
 
                 imageView.clicks()
                         .subscribe {

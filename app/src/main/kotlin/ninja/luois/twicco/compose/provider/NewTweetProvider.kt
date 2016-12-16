@@ -1,23 +1,16 @@
 package ninja.luois.twicco.compose.provider
 
-import android.app.Application
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Log
-import com.squareup.picasso.Picasso
 import com.twitter.sdk.android.core.TwitterApiClient
 import com.twitter.sdk.android.core.TwitterCore
-import ninja.luois.twicco.extension.observable.bgObservable
 import ninja.luois.twicco.extension.observable.bgSingle
 import okhttp3.MediaType
 import okhttp3.RequestBody
-import rx.Observable
 import rx.Single
 import java.io.ByteArrayOutputStream
 import java.io.File
-import java.io.FileInputStream
-import java.io.FileOutputStream
-import java.util.concurrent.TimeUnit
 
 
 class ComposingTweet {

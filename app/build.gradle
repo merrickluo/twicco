@@ -54,7 +54,10 @@ dependencies {
     compile 'com.trello:rxlifecycle-components:1.0'
     compile 'com.trello:rxlifecycle-kotlin:1.0'
 
-    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.facebook.fresco:fresco:1.0'
+    compile 'com.facebook.fresco:animated-gif:1.0'
+    compile 'com.facebook.fresco:animated-webp:1.0'
+    compile 'com.facebook.fresco:webpsupport:1.0'
 
     compile('com.twitter.sdk.android:twitter-core:2.2.0@aar') {
         transitive = true;
