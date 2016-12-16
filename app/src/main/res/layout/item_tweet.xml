@@ -19,6 +19,7 @@
         android:layout_alignTop="@id/image_avatar"
         android:layout_width="match_parent"
         android:layout_marginStart="8dp"
+        android:layout_marginEnd="12dp"
         android:layout_height="wrap_content">
 
         <TextView
@@ -42,7 +43,6 @@
 
         <TextView
             android:text="1h"
-            android:layout_marginEnd="8dp"
             android:textColor="@android:color/darker_gray"
             android:textSize="12sp"
             android:layout_alignParentEnd="true"
@@ -57,8 +57,8 @@
         android:textColor="@android:color/white"
         android:layout_toEndOf="@id/image_avatar"
         android:layout_alignStart="@id/layout_id"
-        android:layout_marginEnd="8dp"
         android:layout_marginTop="2dp"
+        android:layout_marginEnd="12dp"
         android:layout_below="@id/layout_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
@@ -70,6 +70,9 @@
         android:layout_alignStart="@id/text_tweet"
         android:layout_below="@id/text_tweet"
         android:layout_margin="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="12dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -78,6 +81,7 @@
         android:textColor="@android:color/darker_gray"
         android:layout_alignStart="@id/layout_id"
         android:layout_below="@id/layout_quote"
+        android:layout_marginEnd="12dp"
         android:textSize="12sp"
         android:layout_marginTop="4dp"
         android:id="@+id/text_via"
@@ -90,7 +94,7 @@
         android:layout_below="@id/text_via"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="4dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="12dp"
         android:textSize="12sp"
         android:textColor="@android:color/darker_gray"
         android:layout_width="wrap_content"
