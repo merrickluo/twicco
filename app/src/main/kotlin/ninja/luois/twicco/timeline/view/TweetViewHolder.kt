@@ -1,7 +1,7 @@
 package ninja.luois.twicco.timeline.view
 
-import android.opengl.Visibility
 import android.support.v7.widget.RecyclerView
+import android.text.method.LinkMovementMethod
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -30,6 +30,15 @@ class QuoteTweetViewHolder(view: View) : TweetViewHolder(view) {
     val quoteIdView: TextView by bindView(R.id.text_quote_id)
     val quoteTimeView: TextView by bindView(R.id.text_quote_time)
     val quoteTweetView: TextView by bindView(R.id.text_quote_tweet)
+
+    init {
+        val m = quoteTweetView.movementMethod
+        if (m == null || m !is LinkMovementMethod) {
+            if (quoteTweetView.linksClickable) {
+                quoteTweetView.movementMethod = LinkMovementMethod.getInstance()
+            }
+        }
+    }
 }
 
 open class TweetViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -41,4 +50,13 @@ open class TweetViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val tweetView: TextView by bindView(R.id.text_tweet)
     val viaView: TextView by  bindView(R.id.text_via)
     val retweetView: TextView by bindView(R.id.text_retweet)
+
+    init {
+        val m = tweetView.movementMethod
+        if (m == null || m !is LinkMovementMethod) {
+            if (tweetView.linksClickable) {
+                tweetView.movementMethod = LinkMovementMethod.getInstance()
+            }
+        }
+    }
 }

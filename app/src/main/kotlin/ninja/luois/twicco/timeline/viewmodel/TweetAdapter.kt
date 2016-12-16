@@ -1,6 +1,8 @@
 package ninja.luois.twicco.timeline.viewmodel
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -8,17 +10,26 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import com.jakewharton.rxbinding.view.clicks
 import com.squareup.picasso.Picasso
-import com.trello.rxlifecycle.kotlin.bindToLifecycle
 import com.twitter.sdk.android.core.models.Tweet
 import ninja.luois.twicco.R
 import ninja.luois.twicco.common.Activity
 import ninja.luois.twicco.timeline.view.*
 
-class TweetAdapter(val context: Context) : RecyclerView.Adapter<TweetViewHolder>() {
+
+class TweetAdapter(val ctx: Context) : RecyclerView.Adapter<TweetViewHolder>() {
     var tweets: List<Tweet> = emptyList()
 
+    val linkAction = { type: TweetLinkType, content: String ->
+        when (type) {
+            TweetLinkType.Url -> {
+                val i = Intent(Intent.ACTION_VIEW, Uri.parse(content))
+                ctx.startActivity(i)
+            }
+        }
+    }
+
     private fun bindNormalViewHolder(holder: TweetViewHolder, vm: TweetViewModel) {
-        Picasso.with(context).load(vm.avatarUrl).into(holder.avatarView)
+        Picasso.with(ctx).load(vm.avatarUrl).into(holder.avatarView)
         holder.nameView.text = vm.name
         holder.idView.text = vm.id
         holder.timeView.text = vm.time
@@ -31,6 +42,8 @@ class TweetAdapter(val context: Context) : RecyclerView.Adapter<TweetViewHolder>
         } else {
             holder.retweetView.visibility = View.GONE
         }
+
+        vm.linkAction = linkAction
     }
 
     private fun bindQuoteViewHolder(holder: QuoteTweetViewHolder, vm: TweetViewModel) {
@@ -53,14 +66,14 @@ class TweetAdapter(val context: Context) : RecyclerView.Adapter<TweetViewHolder>
         vm.imageUrls.forEachIndexed { i, url ->
             holder.imageViewAt(i)?.let { imageView ->
 
-                Picasso.with(context)
+                Picasso.with(ctx)
                         .load(url)
                         .into(imageView)
 
                 imageView.clicks()
                         .subscribe {
                             val ms = vm.imageUrls.map(::Media)
-                            val fm = (context as Activity).fragmentManager
+                            val fm = (ctx as Activity).fragmentManager
                             MediaPreviewDialog(ms, i)
                                     .show(fm, "media preview")
                         }
@@ -89,7 +102,7 @@ class TweetAdapter(val context: Context) : RecyclerView.Adapter<TweetViewHolder>
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): TweetViewHolder {
-        val inflater = LayoutInflater.from(context)
+        val inflater = LayoutInflater.from(ctx)
         val view = inflater.inflate(R.layout.item_tweet, parent, false)
 
         return when (viewType) {
