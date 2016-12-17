@@ -13,6 +13,7 @@ import com.twitter.sdk.android.core.TwitterSession
 import com.twitter.sdk.android.core.identity.TwitterLoginButton
 import ninja.luois.twicco.R
 import ninja.luois.twicco.common.Fragment
+import ninja.luois.twicco.home.view.MainActivity
 import kotlin.properties.Delegates
 
 class LoginFragment : Fragment() {
@@ -33,7 +34,10 @@ class LoginFragment : Fragment() {
             }
 
             override fun success(result: Result<TwitterSession>?) {
-                Log.wtf("LoginFragment", "shit")
+                // FIXME: back button behavior, so that back button backs
+                // to home, or exit the app, or to app that calls twicco
+                Log.i("LoginFragment", "login succeed, jump to timeline")
+                startActivity(Intent(context, MainActivity::class.java))
             }
         }
     }
