@@ -2,4 +2,5 @@
     <string name="app_name">Twicco</string>
     <string name="Login.Connect">Connect to Twitter</string>
     <string name="avatar_description">Avatar</string>
+    <string name="tweet_button">Tweet</string>
 </resources>

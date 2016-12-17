@@ -41,7 +41,7 @@
             android:background="@android:color/transparent"
             android:drawableStart="@drawable/ic_send"
             android:id="@+id/button_tweet"
-            android:text="Tweet"
+            android:text="@string/tweet_button"
             android:textColor="@color/image_button"
             android:layout_alignParentEnd="true"
             android:textSize="12sp"
