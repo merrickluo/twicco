@@ -4,11 +4,46 @@ import com.twitter.sdk.android.core.TwitterCore
 import com.twitter.sdk.android.core.models.Tweet
 import com.twitter.sdk.android.core.services.StatusesService
 import ninja.luois.twicco.extension.observable.bgObservable
+import ninja.luois.twicco.extension.observable.bgSingle
 import rx.Observable
+import rx.Single
 
 object TimelineProvider {
-    val service: StatusesService
-    val userName: String
+    private val service: StatusesService
+    private val userName: String
+
+    private fun <T> tlObservable(body: (() -> Pair<T?, Exception?>)): Observable<T> {
+        return bgObservable<T> { s ->
+            try {
+                val r = body()
+                r.first?.let {
+                    s.onNext(it)
+                }
+                r.second?.let {
+                    s.onError(it)
+                }
+                s.onCompleted()
+            } catch (e: Throwable) {
+                s.onError(e)
+            }
+        }
+    }
+
+    private fun <T> tlSingle(body: (() -> Pair<T?, Exception?>)): Single<T> {
+        return bgSingle<T> { s ->
+            try {
+                val r = body()
+                r.first?.let {
+                    s.onSuccess(it)
+                }
+                r.second?.let {
+                    s.onError(it)
+                }
+            } catch (e: Throwable) {
+                s.onError(e)
+            }
+        }
+    }
 
     init {
         //val session = TwitterCore.getInstance().sessionManager.activeSession!!
@@ -17,56 +52,41 @@ object TimelineProvider {
     }
 
     fun homeTimeline_(sinceId: Long? = null, maxId: Long? = null): Observable<List<Tweet>> {
-        return bgObservable { s ->
-            try {
-                val resp = service.homeTimeline(100, sinceId, maxId, null, null, null, null)
-                        .execute()
-                if (resp.isSuccessful) {
-                    s.onNext(resp.body())
-                    s.onCompleted()
-                } else {
-                    s.onError(Exception(resp.errorBody().string()))
-                }
-            } catch (tr: Throwable) {
-                s.onError(tr)
+        return tlObservable {
+            val resp = service.homeTimeline(100, sinceId, maxId, null, null, null, null)
+                    .execute()
+            if (resp.isSuccessful) {
+                resp.body() to null
+            } else {
+                null to Exception(resp.errorBody().string())
             }
         }
     }
 
     fun mentionTimeline_(sinceId: Long? = null, maxId: Long? = null): Observable<List<Tweet>> {
-         return bgObservable { s ->
-            try {
-                val resp = service.mentionsTimeline(100, sinceId, maxId, null, null, null)
-                        .execute()
-                if (resp.isSuccessful) {
-                    s.onNext(resp.body())
-                    s.onCompleted()
-                } else {
-                    s.onError(Exception(resp.errorBody().string()))
-                }
-            } catch (tr: Throwable) {
-                s.onError(tr)
-            }
-        }
+         return tlObservable {
+             val resp = service.mentionsTimeline(100, sinceId, maxId, null, null, null)
+                     .execute()
+             if (resp.isSuccessful) {
+                 resp.body() to null
+             } else {
+                 null to Exception(resp.errorBody().string())
+             }
+         }
     }
 
     fun userTimeline_(screenName: String = userName,
                       sinceId: Long? = null,
                       maxId: Long? = null): Observable<List<Tweet>> {
-         return bgObservable { s ->
-            try {
-                val resp = service
-                        .userTimeline(null, screenName, 100, sinceId, maxId, null, null, null, true)
-                        .execute()
+        return tlObservable {
+            val resp = service
+                    .userTimeline(null, screenName, 100, sinceId, maxId, null, null, null, true)
+                    .execute()
 
-                if (resp.isSuccessful) {
-                    s.onNext(resp.body())
-                    s.onCompleted()
-                } else {
-                    s.onError(Exception(resp.errorBody().string()))
-                }
-            } catch (tr: Throwable) {
-                s.onError(tr)
+            if (resp.isSuccessful) {
+                resp.body() to null
+            } else {
+                null to Exception(resp.errorBody().string())
             }
         }
     }
