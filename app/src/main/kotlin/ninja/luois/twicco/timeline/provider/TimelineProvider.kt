@@ -36,7 +36,7 @@ object TimelineProvider {
     fun mentionTimeline_(sinceId: Long? = null, maxId: Long? = null): Observable<List<Tweet>> {
          return bgObservable { s ->
             try {
-                val resp = service.mentionsTimeline(100, null, null, null, null, null)
+                val resp = service.mentionsTimeline(100, sinceId, maxId, null, null, null)
                         .execute()
                 if (resp.isSuccessful) {
                     s.onNext(resp.body())
@@ -56,7 +56,7 @@ object TimelineProvider {
          return bgObservable { s ->
             try {
                 val resp = service
-                        .userTimeline(null, screenName, null,null,null,null,null,null, true)
+                        .userTimeline(null, screenName, 100, sinceId, maxId, null, null, null, true)
                         .execute()
 
                 if (resp.isSuccessful) {

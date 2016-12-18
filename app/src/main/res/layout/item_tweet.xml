@@ -110,7 +110,7 @@
 
     <View
         android:id="@+id/view_color_label"
-        android:background="@android:color/darker_gray"
+        android:background="@color/colorLabelDefault"
         android:layout_width="8dp"
         android:layout_alignParentTop="true"
         android:layout_alignBottom="@id/sp_line"
