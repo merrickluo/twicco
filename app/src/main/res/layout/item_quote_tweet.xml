@@ -3,16 +3,16 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:padding="8dp"
+    android:minHeight="80dp"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/image_quote_tweet"
-        android:layout_alignTop="@+id/layout_quote_id"
-        android:layout_alignBottom="@+id/text_quote_tweet"
         tools:actualScaleType="centerCrop"
-        android:layout_width="80dp"
+        android:layout_alignParentBottom="true"
         android:minHeight="80dp"
+        android:layout_width="80dp"
         android:layout_height="wrap_content" />
 
     <RelativeLayout

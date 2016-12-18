@@ -155,7 +155,7 @@ class TweetViewModel(val rawTweet: Tweet) {
 
     val medias: List<Media>
         get() {
-            return rawTweet.extendedEtities.media?.map {
+            return rawTweet.extendedEtities?.media?.map {
                 val type = Media.Type.of(it.type) ?: Media.Type.Photo
                 Media(type, it.mediaUrl)
             }
