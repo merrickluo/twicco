@@ -22,6 +22,7 @@ import com.facebook.imagepipeline.request.ImageRequest
 import kotterknife.bindView
 import ninja.luois.twicco.R
 import ninja.luois.twicco.common.DialogFragment
+import ninja.luois.twicco.timeline.viewmodel.Media
 
 
 class MediaPreviewDialog(val medias: List<Media>, val position: Int = 0) : DialogFragment() {
@@ -75,11 +76,9 @@ class MediaPreviewDialog(val medias: List<Media>, val position: Int = 0) : Dialo
             }
 
         })
-        pager.setCurrentItem(position)
+        pager.currentItem = position
     }
 }
-
-data class Media(val url: String)
 
 class MediaViewPagerAdapter(val ctx: Context,
                             val medias: List<Media>,
@@ -112,11 +111,22 @@ class MediaViewPagerAdapter(val ctx: Context,
 
         val m = medias[position]
 
-        imageView.controller = Fresco.newDraweeControllerBuilder()
-                .setLowResImageRequest(ImageRequest.fromUri(Uri.parse(m.url)))
-                .setImageRequest(ImageRequest.fromUri(Uri.parse("${m.url}:orig")))
-                .setOldController(imageView.controller)
-                .build()
+        when (m.type) {
+            Media.Type.Gif ->  {
+                imageView.controller = Fresco.newDraweeControllerBuilder()
+                        .setAutoPlayAnimations(true)
+                        .setUri(Uri.parse(m.url))
+                        .setOldController(imageView.controller)
+                        .build()
+            }
+            else -> {
+                imageView.controller = Fresco.newDraweeControllerBuilder()
+                        .setLowResImageRequest(ImageRequest.fromUri(Uri.parse(m.url)))
+                        .setImageRequest(ImageRequest.fromUri(Uri.parse("${m.url}:orig")))
+                        .setOldController(imageView.controller)
+                        .build()
+            }
+        }
 
         imageView.setOnClickListener { clickAction() }
 

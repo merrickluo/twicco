@@ -15,6 +15,8 @@ class ImageTweetViewHolder(view: View) : TweetViewHolder(view) {
     private val image3View: SimpleDraweeView by bindView(R.id.image3)
     private val image4View: SimpleDraweeView by bindView(R.id.image4)
 
+    val mediaTypeTextView: TextView by bindView(R.id.text_media_type)
+
     fun imageViewAt(position: Int): SimpleDraweeView? {
         return when (position) {
             0 -> image1View

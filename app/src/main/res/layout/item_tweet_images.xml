@@ -16,6 +16,17 @@
         app:layout_heightPercent="100%"
         tools:ignore="ContentDescription" />
 
+    <TextView
+        android:text="GIF"
+        android:id="@+id/text_media_type"
+        android:padding="2dp"
+        android:textColor="@android:color/white"
+        android:background="#11303030"
+        android:layout_alignBottom="@id/image1"
+        android:layout_alignEnd="@id/image1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/image2"
         android:layout_marginStart="4dp"

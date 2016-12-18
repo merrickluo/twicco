@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.text.SpannableString
 import android.text.TextPaint
 import android.text.style.ClickableSpan
+import android.util.Log
 import android.view.View
 import com.twitter.sdk.android.core.models.Tweet
 import java.text.DateFormat
@@ -79,6 +80,31 @@ fun Tweet.displayID(): String {
     return "@${user.screenName}"
 }
 
+data class Media(val type: Type, val url: String) {
+    enum class Type {
+        Gif, Video, Photo;
+
+        companion object {
+            fun of(value: String): Type? {
+                Log.i("tweet", value)
+                return when (value) {
+                    "animated_gif" -> Gif
+                    "video" -> Video
+                    else -> Photo
+                }
+            }
+        }
+
+        fun displayName(): String {
+            return when (this) {
+                Gif -> "GIF"
+                Video -> "VIDEO"
+                else -> ""
+            }
+        }
+    }
+}
+
 class TweetViewModel(val rawTweet: Tweet) {
     private val dateFormat: DateFormat
     private val showingTweet: Tweet
@@ -127,9 +153,12 @@ class TweetViewModel(val rawTweet: Tweet) {
             }
         }
 
-    val imageUrls: List<String>
+    val medias: List<Media>
         get() {
-            return rawTweet.extendedEtities.media.map { it.mediaUrlHttps }
+            return rawTweet.extendedEtities.media.map {
+                val type = Media.Type.of(it.type) ?: Media.Type.Photo
+                Media(type, it.mediaUrl)
+            }
         }
 
     val via: String

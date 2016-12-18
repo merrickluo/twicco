@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -63,9 +64,8 @@ class TweetAdapter(val ctx: Context) : RecyclerView.Adapter<TweetViewHolder>() {
                 holder.quoteImageView.setImageURI(Uri.parse(it), ctx)
                 holder.quoteImageView.clicks()
                         .subscribe {
-                            val ms = vm.quoteImageUrls!!.map(::Media)
                             val fm = (ctx as Activity).fragmentManager
-                            MediaPreviewDialog(ms)
+                            MediaPreviewDialog(vm.medias)
                                     .show(fm, "media preview")
                         }
             }
@@ -74,23 +74,24 @@ class TweetAdapter(val ctx: Context) : RecyclerView.Adapter<TweetViewHolder>() {
 
     private fun bindImageViewHolder(holder: ImageTweetViewHolder, vm: TweetViewModel) {
         for (i in 0..3) {
-            if (i < vm.imageUrls.size) {
+            if (i < vm.medias.size) {
                 holder.imageViewAt(i)?.visibility = View.VISIBLE
             } else {
                 holder.imageViewAt(i)?.visibility = View.GONE
             }
         }
 
-        vm.imageUrls.forEachIndexed { i, url ->
-            holder.imageViewAt(i)?.let { imageView ->
+        vm.medias.forEachIndexed { i, media ->
+            holder.mediaTypeTextView.text = media.type.displayName()
+            Log.i("Tweet", media.type.displayName())
 
-                imageView.setImageURI(Uri.parse(url), ctx)
+            holder.imageViewAt(i)?.let { imageView ->
+                imageView.setImageURI(Uri.parse(media.url), ctx)
 
                 imageView.clicks()
                         .subscribe {
-                            val ms = vm.imageUrls.map(::Media)
                             val fm = (ctx as Activity).fragmentManager
-                            MediaPreviewDialog(ms, i)
+                            MediaPreviewDialog(vm.medias, i)
                                     .show(fm, "media preview")
                         }
             }
