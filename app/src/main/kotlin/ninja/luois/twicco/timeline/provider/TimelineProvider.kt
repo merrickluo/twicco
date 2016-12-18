@@ -53,7 +53,8 @@ object TimelineProvider {
 
     fun homeTimeline_(sinceId: Long? = null, maxId: Long? = null): Observable<List<Tweet>> {
         return tlObservable {
-            val resp = service.homeTimeline(100, sinceId, maxId, null, null, null, null)
+            val resp = service
+                    .homeTimeline(100, sinceId, maxId, null, null, null, null)
                     .execute()
             if (resp.isSuccessful) {
                 resp.body() to null
@@ -65,7 +66,8 @@ object TimelineProvider {
 
     fun mentionTimeline_(sinceId: Long? = null, maxId: Long? = null): Observable<List<Tweet>> {
          return tlObservable {
-             val resp = service.mentionsTimeline(100, sinceId, maxId, null, null, null)
+             val resp = service
+                     .mentionsTimeline(100, sinceId, maxId, null, null, null)
                      .execute()
              if (resp.isSuccessful) {
                  resp.body() to null

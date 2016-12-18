@@ -113,14 +113,21 @@ abstract class TimelineFragment : Fragment() {
                 }
     }
 
+    private var noMore = false
     fun loadMore() {
         val last = tweets_.value.lastOrNull()
+        if (noMore) return
         if (loading_.value == true) return
         tweetLoader(null, last?.id)
                 .doOnSubscribe { loading_.value = true }
                 .doAfterTerminate { loading_.value = false }
                 .subscribeTo {
-                    next { tweets_.value = tweets_.value + it }
+                    next {
+                        // maxId will return as well
+                        val new = it.drop(1)
+                        if (new.isEmpty()) { noMore = true }
+                        tweets_.value = tweets_.value + new
+                    }
                     error { error_.onNext("cannot load more: ${it.message}") }
                 }
     }
