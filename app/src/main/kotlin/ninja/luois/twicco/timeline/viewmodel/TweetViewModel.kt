@@ -37,30 +37,42 @@ enum class TweetLinkType {
     HashTag,Media,Url,User
 }
 
+// dirty workaround with java utf-16 string and 8bit byte
 fun Tweet.displayText(linkAction: (TweetLinkType, String) -> Unit): CharSequence {
-    val sb = SpannableString(text)
-    //hashtag
-    entities.hashtags?.forEach {
-        sb.setLinkSpan(it.start, it.end, it.text, TweetLinkType.HashTag, linkAction)
-    }
-    entities.media?.forEach {
-        sb.setLinkSpan(it.start, it.end, it.mediaUrlHttps, TweetLinkType.Media, linkAction)
-    }
+    var showText = StringBuilder(text)
+    // replace url with displayUrl
     entities.urls?.forEach {
-        sb.setLinkSpan(it.start, it.end, it.expandedUrl, TweetLinkType.Url, linkAction)
+        val start = showText.indexOf(it.url, ignoreCase = true)
+        val end = start + it.url.toCharArray().size
+        showText = StringBuilder(showText.replaceRange(start, end, it.displayUrl))
     }
-    entities.userMentions?.forEach {
-        sb.setLinkSpan(it.start, it.end, it.screenName, TweetLinkType.User, linkAction)
+    // remove media url
+    entities.media?.forEach {
+        val start = showText.indexOf(it.url, ignoreCase = true)
+        val end = start + it.url.toCharArray().size
+        showText = StringBuilder(showText.replaceRange(start, end, ""))
     }
 
-    var end = displayTextRange[1]
-    // some unicode has 2 char and twitter count as 1
-    if (end < sb.length) {
-        if (Character.isLowSurrogate(sb[end])) {
-            end += 1
-        }
+    // highlight entities
+    val sb = SpannableString(showText)
+    entities.hashtags?.forEach {
+        val start = sb.indexOf("#${it.text}", ignoreCase = true) // #hashtag
+        val end = start + it.text.toCharArray().size + 1
+        sb.setLinkSpan(start, end, it.text, TweetLinkType.HashTag, linkAction)
     }
-    return sb.subSequence(0, end)
+    entities.userMentions?.forEach {
+        val start = sb.indexOf("@${it.screenName}", ignoreCase = true) // @screenName
+        val end = start + it.screenName.toCharArray().size + 1
+        sb.setLinkSpan(start, end, it.screenName, TweetLinkType.User, linkAction)
+    }
+
+    entities.urls?.forEach {
+        val start = sb.indexOf(it.displayUrl, ignoreCase = true)
+        val end = start + it.displayUrl.toCharArray().size
+        sb.setLinkSpan(start, end, it.expandedUrl, TweetLinkType.Url, linkAction)
+    }
+
+    return sb
 }
 
 fun Tweet.displayID(): String {
