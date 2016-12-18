@@ -55,22 +55,20 @@ class TweetAdapter(val ctx: Context, val footer: View) : RecyclerView.Adapter<Tw
     }
 
     private fun bindQuoteViewHolder(holder: QuoteTweetViewHolder, vm: TweetViewModel) {
-        if (vm.hasQuote) {
-            holder.quoteIdView.text = vm.quoteId
-            holder.quoteNameView.text = vm.quoteName
-            holder.quoteTweetView.text = vm.quoteTweet
+        holder.quoteIdView.text = vm.id
+        holder.quoteNameView.text = vm.name
+        holder.quoteTweetView.text = vm.text
 
-            holder.quoteImageView.visibility = View.GONE
-            vm.quoteImageUrls?.firstOrNull()?.let {
-                holder.quoteImageView.visibility = View.VISIBLE
-                holder.quoteImageView.setImageURI(Uri.parse(it), ctx)
-                holder.quoteImageView.clicks()
-                        .subscribe {
-                            val fm = (ctx as Activity).fragmentManager
-                            MediaPreviewDialog(vm.medias)
-                                    .show(fm, "media preview")
-                        }
-            }
+        holder.quoteImageView.visibility = View.GONE
+        vm.medias.firstOrNull()?.let {
+            holder.quoteImageView.visibility = View.VISIBLE
+            holder.quoteImageView.setImageURI(Uri.parse(it.url), ctx)
+            holder.quoteImageView.clicks()
+                    .subscribe {
+                        val fm = (ctx as Activity).fragmentManager
+                        MediaPreviewDialog(vm.medias)
+                                .show(fm, "media preview")
+                    }
         }
     }
 
@@ -108,7 +106,7 @@ class TweetAdapter(val ctx: Context, val footer: View) : RecyclerView.Adapter<Tw
 
         when (getItemViewType(position)) {
             TweetViewModel.Type.Quote.value -> {
-                bindQuoteViewHolder(holder as QuoteTweetViewHolder, vm)
+                bindQuoteViewHolder(holder as QuoteTweetViewHolder, TweetViewModel(vm.quoteTweet))
             }
             TweetViewModel.Type.Image.value -> {
                 bindImageViewHolder(holder as ImageTweetViewHolder, vm)

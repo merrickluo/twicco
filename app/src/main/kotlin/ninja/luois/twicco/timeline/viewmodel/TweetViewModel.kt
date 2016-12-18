@@ -155,10 +155,11 @@ class TweetViewModel(val rawTweet: Tweet) {
 
     val medias: List<Media>
         get() {
-            return rawTweet.extendedEtities.media.map {
+            return rawTweet.extendedEtities.media?.map {
                 val type = Media.Type.of(it.type) ?: Media.Type.Photo
                 Media(type, it.mediaUrl)
             }
+            ?: emptyList()
         }
 
     val via: String
@@ -174,24 +175,8 @@ class TweetViewModel(val rawTweet: Tweet) {
             }
         }
 
-    val hasQuote: Boolean
-        get() = rawTweet.quotedStatus != null
-
-    val quoteId: String
-        get() = rawTweet.quotedStatus!!.displayID()
-
-    val quoteName: String
-        get() = rawTweet.quotedStatus!!.user.name
-
-    val quoteTweet: CharSequence
-        get() = rawTweet.quotedStatus!!.displayText() { type, text ->
-            linkAction?.invoke(type, text)
-        }
-
-    val quoteImageUrls: List<String>?
-        get () {
-            return rawTweet.quotedStatus!!.extendedEtities?.media?.map { it.mediaUrlHttps }
-        }
+    val quoteTweet: Tweet
+        get() = rawTweet.quotedStatus!!
 
     val hasRetweet: Boolean
         get() = rawTweet.retweetedStatus != null
