@@ -19,6 +19,8 @@ import ninja.luois.twicco.common.Fragment
 import ninja.luois.twicco.extension.observable.Variable
 import ninja.luois.twicco.extension.observable.subscribeTo
 import ninja.luois.twicco.extension.ui.showShortToast
+import ninja.luois.twicco.timeline.provider.TimelineProvider
+import ninja.luois.twicco.timeline.viewmodel.Action
 import ninja.luois.twicco.timeline.viewmodel.TweetAdapter
 import rx.Observable
 import rx.android.schedulers.AndroidSchedulers
@@ -84,7 +86,24 @@ abstract class TimelineFragment : Fragment() {
                 }
                 .subscribe { loadMore() }
 
-        val adapter = TweetAdapter(activity, footerView)
+        val adapter = TweetAdapter(activity, footerView) { t, action ->
+            when (action) {
+                Action.Retweet -> {
+                    if (t.retweeted) {
+                        activity.showShortToast("undo retweeting")
+                        TimelineProvider.unretweet_(t.id).subscribe()
+                    } else {
+                        activity.showShortToast("retweeting")
+                        TimelineProvider.retweet_(t.id).subscribe()
+                    }
+                }
+                Action.Heart -> {
+                    // TODO: undo heart
+                    activity.showShortToast("favoriting")
+                    TimelineProvider.heart_(t.id).subscribe()
+                }
+            }
+        }
         listView.adapter = adapter
 
         tweets_.asObservable().bindToLifecycle(this)
@@ -99,7 +118,6 @@ abstract class TimelineFragment : Fragment() {
 
         refresh()
     }
-
 
     fun refresh() {
         val current = tweets_.value.firstOrNull()

@@ -15,8 +15,14 @@ import ninja.luois.twicco.R
 import ninja.luois.twicco.common.Activity
 import ninja.luois.twicco.timeline.view.*
 
+enum class Action {
+    Reply, Retweet, Heart, Quote, More
+}
 
-class TweetAdapter(val ctx: Context, val footer: View) : RecyclerView.Adapter<TweetViewHolder>() {
+class TweetAdapter(val ctx: Context,
+                   val footer: View,
+                   val action: (Tweet, Action) -> Unit) : RecyclerView.Adapter<TweetViewHolder>() {
+
     var tweets: List<Tweet> = emptyList()
 
     private val viewTypeFooter = 999
@@ -39,10 +45,11 @@ class TweetAdapter(val ctx: Context, val footer: View) : RecyclerView.Adapter<Tw
         holder.tweetView.text = vm.text
 
         if (vm.text.isNullOrBlank()) {
-            holder.tweetView.visibility = View.GONE
+
         } else {
             holder.tweetView.visibility = View.VISIBLE
         }
+        vm.linkAction = linkAction
 
         if (vm.hasRetweet) {
             holder.retweetView.visibility = View.VISIBLE
@@ -51,7 +58,19 @@ class TweetAdapter(val ctx: Context, val footer: View) : RecyclerView.Adapter<Tw
             holder.retweetView.visibility = View.GONE
         }
 
-        vm.linkAction = linkAction
+        holder.replyButton.clicks()
+                .subscribe { action(vm.rawTweet, Action.Reply) }
+        holder.retweetButton.clicks()
+                .subscribe { action(vm.rawTweet, Action.Retweet) }
+        holder.heartButton.clicks()
+                .subscribe { action(vm.rawTweet, Action.Heart) }
+        holder.quoteButton.clicks()
+                .subscribe { action(vm.rawTweet, Action.Quote) }
+
+        // should toggle menu
+        holder.moreButton.clicks()
+                .subscribe { action(vm.rawTweet, Action.More) }
+
     }
 
     private fun bindQuoteViewHolder(holder: QuoteTweetViewHolder, vm: TweetViewModel) {
