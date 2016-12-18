@@ -8,6 +8,7 @@
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/image_quote_tweet"
+        android:layout_alignTop="@+id/layout_quote_id"
         android:layout_alignBottom="@+id/text_quote_tweet"
         tools:actualScaleType="centerCrop"
         android:layout_width="80dp"
