@@ -3,13 +3,14 @@ package ninja.luois.twicco.timeline.view
 import android.support.v7.widget.RecyclerView
 import android.text.method.LinkMovementMethod
 import android.view.View
-import android.widget.ImageView
 import android.widget.TextView
 import com.facebook.drawee.view.SimpleDraweeView
 import kotterknife.bindView
 import ninja.luois.twicco.R
 
-class ImageTweetViewHolder(view: View) : TweetViewHolder(view) {
+abstract class TweetViewHolder(view: View) : RecyclerView.ViewHolder(view)
+
+class ImageTweetViewHolder(view: View) : TextTweetViewHolder(view) {
     private val image1View: SimpleDraweeView by bindView(R.id.image1)
     private val image2View: SimpleDraweeView by bindView(R.id.image2)
     private val image3View: SimpleDraweeView by bindView(R.id.image3)
@@ -28,7 +29,7 @@ class ImageTweetViewHolder(view: View) : TweetViewHolder(view) {
     }
 }
 
-class QuoteTweetViewHolder(view: View) : TweetViewHolder(view) {
+class QuoteTweetViewHolder(view: View) : TextTweetViewHolder(view) {
     val quoteNameView: TextView by bindView(R.id.text_quote_name)
     val quoteIdView: TextView by bindView(R.id.text_quote_id)
     val quoteTimeView: TextView by bindView(R.id.text_quote_time)
@@ -45,7 +46,7 @@ class QuoteTweetViewHolder(view: View) : TweetViewHolder(view) {
     }
 }
 
-open class TweetViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+open class TextTweetViewHolder(view: View) : TweetViewHolder(view) {
     val colorLabel: View by bindView(R.id.view_color_label)
     val avatarView: SimpleDraweeView by bindView(R.id.image_avatar)
     val nameView: TextView by bindView(R.id.text_name)

@@ -16,8 +16,10 @@ import ninja.luois.twicco.common.Activity
 import ninja.luois.twicco.timeline.view.*
 
 
-class TweetAdapter(val ctx: Context) : RecyclerView.Adapter<TweetViewHolder>() {
+class TweetAdapter(val ctx: Context, val footer: View) : RecyclerView.Adapter<TweetViewHolder>() {
     var tweets: List<Tweet> = emptyList()
+
+    private val viewTypeFooter = 999
 
     val linkAction = { type: TweetLinkType, content: String ->
         when (type) {
@@ -28,7 +30,7 @@ class TweetAdapter(val ctx: Context) : RecyclerView.Adapter<TweetViewHolder>() {
         }
     }
 
-    private fun bindNormalViewHolder(holder: TweetViewHolder, vm: TweetViewModel) {
+    private fun bindNormalViewHolder(holder: TextTweetViewHolder, vm: TweetViewModel) {
         holder.avatarView.setImageURI(Uri.parse(vm.avatarUrl), ctx)
         holder.nameView.text = vm.name
         holder.idView.text = vm.id
@@ -100,8 +102,9 @@ class TweetAdapter(val ctx: Context) : RecyclerView.Adapter<TweetViewHolder>() {
 
     override fun onBindViewHolder(holder: TweetViewHolder?, position: Int) {
         if (holder == null) return
+        if (position == tweets.size) return // footer view
         val vm = TweetViewModel(tweets[position])
-        bindNormalViewHolder(holder, vm)
+        bindNormalViewHolder(holder as TextTweetViewHolder, vm)
 
         when (getItemViewType(position)) {
             TweetViewModel.Type.Quote.value -> {
@@ -114,6 +117,9 @@ class TweetAdapter(val ctx: Context) : RecyclerView.Adapter<TweetViewHolder>() {
     }
 
     override fun getItemViewType(position: Int): Int {
+        if (position == tweets.size) {
+            return viewTypeFooter
+        }
         val vm = TweetViewModel(tweets[position])
         return vm.type.value
     }
@@ -123,6 +129,8 @@ class TweetAdapter(val ctx: Context) : RecyclerView.Adapter<TweetViewHolder>() {
         val view = inflater.inflate(R.layout.item_tweet, parent, false)
 
         return when (viewType) {
+            viewTypeFooter -> FooterViewHolder(footer)
+
             TweetViewModel.Type.Image.value -> {
                 val mediaView = inflater.inflate(R.layout.item_tweet_images, parent, false)
                 val container = view.findViewById(R.id.layout_quote) as FrameLayout
@@ -137,14 +145,15 @@ class TweetAdapter(val ctx: Context) : RecyclerView.Adapter<TweetViewHolder>() {
                 container.addView(quote)
                 QuoteTweetViewHolder(view)
             }
-            else -> TweetViewHolder(view)
+            else -> TextTweetViewHolder(view)
         }
     }
 
     override fun getItemCount(): Int {
-        return tweets.size
+        return tweets.size + 1
     }
 
+    private class FooterViewHolder(view: View) : TweetViewHolder(view)
 }
 
 
