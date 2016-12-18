@@ -18,10 +18,13 @@ import com.facebook.drawee.backends.pipeline.Fresco
 import com.facebook.drawee.drawable.ScalingUtils
 import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder
 import com.facebook.drawee.view.SimpleDraweeView
+import com.facebook.imagepipeline.common.ResizeOptions
 import com.facebook.imagepipeline.request.ImageRequest
+import com.facebook.imagepipeline.request.ImageRequestBuilder
 import kotterknife.bindView
 import ninja.luois.twicco.R
 import ninja.luois.twicco.common.DialogFragment
+import ninja.luois.twicco.extension.ui.getScreenSize
 import ninja.luois.twicco.timeline.viewmodel.Media
 
 
@@ -111,22 +114,17 @@ class MediaViewPagerAdapter(val ctx: Context,
 
         val m = medias[position]
 
-        when (m.type) {
-            Media.Type.Gif ->  {
-                imageView.controller = Fresco.newDraweeControllerBuilder()
-                        .setAutoPlayAnimations(true)
-                        .setUri(Uri.parse(m.url))
-                        .setOldController(imageView.controller)
-                        .build()
-            }
-            else -> {
-                imageView.controller = Fresco.newDraweeControllerBuilder()
-                        .setLowResImageRequest(ImageRequest.fromUri(Uri.parse(m.url)))
-                        .setImageRequest(ImageRequest.fromUri(Uri.parse("${m.url}:orig")))
-                        .setOldController(imageView.controller)
-                        .build()
-            }
-        }
+        val size = ctx.getScreenSize()
+        val origReq = ImageRequestBuilder
+                .newBuilderWithSource(Uri.parse("${m.url}:orig"))
+                .setResizeOptions(ResizeOptions(size.x, size.y))
+                .build()
+
+        imageView.controller = Fresco.newDraweeControllerBuilder()
+                .setLowResImageRequest(ImageRequest.fromUri(Uri.parse(m.url)))
+                .setImageRequest(origReq)
+                .setOldController(imageView.controller)
+                .build()
 
         imageView.setOnClickListener { clickAction() }
 
