@@ -2,13 +2,15 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="18dp"
     android:height="18dp"
+    android:tintMode="multiply"
+    android:tint="@color/action_button"
     android:viewportWidth="24"
     android:viewportHeight="24">
 
     <path
         android:pathData="M0 0h24v24H0z" />
     <path
-        android:fillColor="@color/actionButtonColor"
+        android:fillColor="@color/actionButtonNormal"
         android:pathData="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2
 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
 </vector>

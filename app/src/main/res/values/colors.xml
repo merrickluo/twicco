@@ -10,5 +10,6 @@
 
     <color name="colorLabelDefault">#303030</color>
 
-    <color name="actionButtonColor">#808080</color>
+    <color name="actionButtonNormal">#808080</color>
+    <color name="actionButtonHover">#eeeeee</color>
 </resources>
