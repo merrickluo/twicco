@@ -3,6 +3,7 @@ package ninja.luois.twicco.timeline.view
 import android.support.v7.widget.RecyclerView
 import android.text.method.LinkMovementMethod
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
 import com.facebook.drawee.view.SimpleDraweeView
 import kotterknife.bindView
@@ -56,6 +57,13 @@ open class TextTweetViewHolder(view: View) : TweetViewHolder(view) {
     val viaView: TextView by  bindView(R.id.text_via)
     val retweetView: TextView by bindView(R.id.text_retweet)
 
+    val actionsLayout: View by bindView(R.id.layout_actions)
+    val replyButton: Button by bindView(R.id.action_reply)
+    val retweetButton: Button by bindView(R.id.action_retweet)
+    val heartButton: Button by bindView(R.id.action_heart)
+    val quoteButton: Button by bindView(R.id.action_quote)
+    val moreButton: Button by bindView(R.id.action_more)
+
     init {
         val m = tweetView.movementMethod
         if (m == null || m !is LinkMovementMethod) {
@@ -65,3 +73,26 @@ open class TextTweetViewHolder(view: View) : TweetViewHolder(view) {
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

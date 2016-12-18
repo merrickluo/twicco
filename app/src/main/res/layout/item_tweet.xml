@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:background="@color/colorPrimaryDark"
     android:layout_height="wrap_content">
@@ -93,16 +94,97 @@
         android:id="@+id/text_retweet"
         android:layout_below="@id/text_via"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="12dp"
         android:textSize="12sp"
         android:textColor="@android:color/darker_gray"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:id="@+id/layout_actions"
+        android:layout_below="@id/text_retweet"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginEnd="8dp"
+        android:layout_toStartOf="@+id/action_more"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:baselineAligned="false">
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageButton
+                android:id="@+id/action_reply"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_reply"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:ignore="ContentDescription" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageButton
+                android:id="@+id/action_retweet"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_retweet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:ignore="ContentDescription" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageButton
+                android:id="@+id/action_heart"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_heart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:ignore="ContentDescription" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageButton
+                android:id="@+id/action_quote"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_quote"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:ignore="ContentDescription" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/action_more"
+        android:layout_alignTop="@id/layout_actions"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="18dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_more"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:ignore="ContentDescription" />
+
     <View
         android:id="@+id/sp_line"
-        android:layout_below="@id/text_retweet"
+        android:layout_below="@id/layout_actions"
         android:background="@color/colorPrimary"
         android:layout_width="match_parent"
         android:layout_marginTop="8dp"

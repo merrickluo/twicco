@@ -9,4 +9,6 @@
     <color name="buttonNormal">#ffffff</color>
 
     <color name="colorLabelDefault">#303030</color>
+
+    <color name="actionButtonColor">#808080</color>
 </resources>
