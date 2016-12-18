@@ -93,35 +93,35 @@ object TimelineProvider {
         }
     }
 
-    fun retweet_(tweetId: Long): Single<Unit> {
+    fun retweet_(tweetId: Long): Single<Tweet> {
         return tlSingle {
             val resp = service.retweet(tweetId, null).execute()
             if (resp.isSuccessful) {
-                Unit to null
+                resp.body() to null
             } else {
                 null to Exception(resp.errorBody().string())
             }
         }
     }
 
-    fun unretweet_(tweetId: Long): Single<Unit> {
+    fun unretweet_(tweetId: Long): Single<Tweet> {
         return tlSingle {
             val resp = service.unretweet(tweetId, null).execute()
             if (resp.isSuccessful) {
-                Unit to null
+                resp.body() to null
             } else {
                 null to Exception(resp.errorBody().string())
             }
         }
     }
 
-    fun heart_(tweetId: Long): Single<Unit> {
+    fun heart_(tweetId: Long): Single<Tweet> {
          return tlSingle {
              val resp = TwitterCore.getInstance()
                      .apiClient.favoriteService.create(tweetId, true)
                      .execute()
              if (resp.isSuccessful) {
-                 Unit to null
+                 resp.body() to null
              } else {
                  null to Exception(resp.errorBody().string())
              }

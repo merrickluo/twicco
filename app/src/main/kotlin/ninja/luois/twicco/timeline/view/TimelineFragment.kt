@@ -40,6 +40,8 @@ abstract class TimelineFragment : Fragment() {
     val loading_: Variable<Boolean> = Variable(false)
     val error_: PublishSubject<String> = PublishSubject.create()
 
+    var adapter: TweetAdapter by Delegates.notNull()
+
     abstract val tweetLoader: (sinceId: Long?, maxId: Long?) -> Observable<List<Tweet>>
 
     override fun onCreateView(inflater: LayoutInflater?,
@@ -86,21 +88,33 @@ abstract class TimelineFragment : Fragment() {
                 }
                 .subscribe { loadMore() }
 
-        val adapter = TweetAdapter(activity, footerView) { t, action ->
+        adapter = TweetAdapter(activity, footerView) { t, action ->
             when (action) {
                 Action.Retweet -> {
                     if (t.retweeted) {
                         activity.showShortToast("undo retweeting")
-                        TimelineProvider.unretweet_(t.id).subscribe()
+                        // TODO: need local cache to update favorite state
+                        TimelineProvider.unretweet_(t.id)
+                                .bindToLifecycle(this)
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe { adapter.update(it) }
                     } else {
+                        // TODO: need local cache to update favorite state
                         activity.showShortToast("retweeting")
-                        TimelineProvider.retweet_(t.id).subscribe()
+                        TimelineProvider.retweet_(t.id)
+                                .bindToLifecycle(this)
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe { adapter.update(it) }
                     }
                 }
                 Action.Heart -> {
                     // TODO: undo heart
+                    // TODO: need local cache to update favorite state
                     activity.showShortToast("favoriting")
-                    TimelineProvider.heart_(t.id).subscribe()
+                    TimelineProvider.heart_(t.id)
+                            .bindToLifecycle(this)
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe { adapter.update(t) }
                 }
             }
         }

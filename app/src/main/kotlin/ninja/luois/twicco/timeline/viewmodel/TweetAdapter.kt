@@ -2,6 +2,7 @@ package ninja.luois.twicco.timeline.viewmodel
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.support.v7.widget.RecyclerView
 import android.util.Log
@@ -26,6 +27,18 @@ class TweetAdapter(val ctx: Context,
     var tweets: List<Tweet> = emptyList()
 
     private val viewTypeFooter = 999
+
+    fun update(tweet: Tweet) {
+        val index = tweets.indexOfFirst { it.id == tweet.id }
+        if (index == -1) {
+            return
+        }
+        Log.i("UpdateTweet", "new: retweet is ${tweet.retweeted}, favorited is ${tweet.favorited}")
+        Log.i("UpdateTweet", "prev: retweet is ${tweets[index].retweeted}, favorited is ${tweets[index].favorited}")
+        tweets = tweets.take(index) + tweet + tweets.drop(index+1)
+        Log.i("UpdateTweet", "after: retweet is ${tweets[index].retweeted}, favorited is ${tweets[index].favorited}")
+        notifyDataSetChanged()
+    }
 
     val linkAction = { type: TweetLinkType, content: String ->
         when (type) {
@@ -56,6 +69,18 @@ class TweetAdapter(val ctx: Context,
             holder.retweetView.text = vm.retweet
         } else {
             holder.retweetView.visibility = View.GONE
+        }
+
+        if (vm.retweeted) {
+            holder.retweetButton.setColorFilter(Color.WHITE)
+        } else {
+            holder.retweetButton.clearColorFilter()
+        }
+
+        if (vm.favorited) {
+            holder.heartButton.setColorFilter(Color.WHITE)
+        } else {
+            holder.heartButton.clearColorFilter()
         }
 
         holder.replyButton.clicks()

@@ -183,8 +183,15 @@ class TweetViewModel(val rawTweet: Tweet) {
 
     val retweet: String
         get() {
+            rawTweet.favorited
             return "Retweeted by ${rawTweet.user.name} and ${rawTweet.retweetCount} others"
         }
+
+    val retweeted: Boolean
+        get() = rawTweet.retweeted
+
+    val favorited: Boolean
+        get() = rawTweet.favorited
 
     val type: Type
         get() {
