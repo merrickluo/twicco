@@ -40,6 +40,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.0.1'
     compile 'com.android.support:recyclerview-v7:25.0.1'
     compile 'com.android.support:design:25.0.1'
+    compile 'com.android.support:percent:25.0.1'
 
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
@@ -53,7 +54,10 @@ dependencies {
     compile 'com.trello:rxlifecycle-components:1.0'
     compile 'com.trello:rxlifecycle-kotlin:1.0'
 
-    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.facebook.fresco:fresco:1.0'
+    compile 'com.facebook.fresco:animated-gif:1.0'
+    compile 'com.facebook.fresco:animated-webp:1.0'
+    compile 'com.facebook.fresco:webpsupport:1.0'
 
     compile('com.twitter.sdk.android:twitter-core:2.2.0@aar') {
         transitive = true;

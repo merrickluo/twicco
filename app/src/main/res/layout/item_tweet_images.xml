@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="2dp"
+    android:layout_width="match_parent"
+    android:layout_height="160dp">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/image1"
+        tools:actualScaleType="centerCrop"
+        android:layout_toStartOf="@+id/image2"
+        android:layout_above="@+id/image4"
+        app:layout_widthPercent="100%"
+        app:layout_heightPercent="100%"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:text="GIF"
+        android:id="@+id/text_media_type"
+        android:padding="2dp"
+        android:textColor="@android:color/white"
+        android:background="#11303030"
+        android:layout_alignBottom="@id/image1"
+        android:layout_alignEnd="@id/image1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/image2"
+        android:layout_marginStart="4dp"
+        tools:actualScaleType="centerCrop"
+        android:layout_alignParentEnd="true"
+        android:layout_above="@+id/image3"
+        app:layout_widthPercent="50%"
+        app:layout_heightPercent="100%"
+        tools:ignore="ContentDescription" />
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/image3"
+        android:layout_marginTop="4dp"
+        tools:actualScaleType="centerCrop"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        app:layout_widthPercent="50%"
+        app:layout_heightPercent="50%"
+        tools:ignore="ContentDescription" />
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/image4"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="4dp"
+        tools:actualScaleType="centerCrop"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_toStartOf="@id/image3"
+        app:layout_widthPercent="100%"
+        app:layout_heightPercent="50%"
+        tools:ignore="ContentDescription" />
+
+
+</android.support.percent.PercentRelativeLayout>

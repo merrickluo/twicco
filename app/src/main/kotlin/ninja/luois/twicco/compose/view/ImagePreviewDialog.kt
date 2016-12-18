@@ -1,6 +1,7 @@
 package ninja.luois.twicco.compose.view
 
 import android.content.Context
+import android.net.Uri
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -9,8 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
+import com.facebook.drawee.view.SimpleDraweeView
 import com.jakewharton.rxbinding.view.clicks
-import com.squareup.picasso.Picasso
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
 import kotterknife.bindView
 import ninja.luois.twicco.R
@@ -20,7 +21,7 @@ import java.io.File
 
 
 class PreviewViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    val imageView by bindView<ImageView>(R.id.image_preview)
+    val imageView by bindView<SimpleDraweeView>(R.id.image_preview)
     val clearButton by bindView<ImageButton>(R.id.button_clear)
 }
 
@@ -42,12 +43,7 @@ class PreviewImageAdapter(val ctx: Context,
 
     override fun onBindViewHolder(holder: PreviewViewHolder?, position: Int) {
         holder?.imageView?.let {
-            Picasso.with(ctx)
-                    .load(File(medias[position].filepath))
-                    .resizeDimen(R.dimen.new_tweet_preview_image_size,
-                            R.dimen.new_tweet_preview_image_size)
-                    .centerCrop()
-                    .into(it)
+            it.setImageURI(Uri.fromFile(File(medias[position].filepath)), ctx)
         }
         holder?.clearButton?.setOnClickListener {
             medias = medias.filterIndexed { i, media -> i != position }

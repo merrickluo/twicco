@@ -78,6 +78,10 @@ class NewTweetActivity : Activity() {
 
         tweetEditText.textChanges()
                 .bindToLifecycle(this)
+                .subscribe { tweet.text = it.toString() }
+
+        tweetEditText.textChanges()
+                .bindToLifecycle(this)
                 .doOnNext { tweetCountText.isEnabled = it.toString().length <= 140 }
                 .map { (140 - it.length).toString() }
                 .subscribe(tweetCountText.text())

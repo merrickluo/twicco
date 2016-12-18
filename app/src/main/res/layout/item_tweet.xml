@@ -4,7 +4,7 @@
     android:background="@color/colorPrimaryDark"
     android:layout_height="wrap_content">
 
-    <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:id="@+id/image_avatar"
@@ -19,6 +19,7 @@
         android:layout_alignTop="@id/image_avatar"
         android:layout_width="match_parent"
         android:layout_marginStart="8dp"
+        android:layout_marginEnd="12dp"
         android:layout_height="wrap_content">
 
         <TextView
@@ -42,7 +43,6 @@
 
         <TextView
             android:text="1h"
-            android:layout_marginEnd="8dp"
             android:textColor="@android:color/darker_gray"
             android:textSize="12sp"
             android:layout_alignParentEnd="true"
@@ -57,81 +57,31 @@
         android:textColor="@android:color/white"
         android:layout_toEndOf="@id/image_avatar"
         android:layout_alignStart="@id/layout_id"
-        android:layout_marginEnd="8dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="12dp"
         android:layout_below="@id/layout_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-
-    <RelativeLayout
+    <FrameLayout
         android:id="@+id/layout_quote"
-        android:layout_alignStart="@id/text_tweet"
+        android:visibility="gone"
         android:background="@drawable/shape_quote_tweet"
-        android:paddingTop="4dp"
-        android:paddingStart="4dp"
-        android:paddingEnd="4dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginTop="4dp"
-        android:paddingBottom="8dp"
+        android:layout_alignStart="@id/text_tweet"
         android:layout_below="@id/text_tweet"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <RelativeLayout
-            android:id="@+id/layout_quote_id"
-            android:layout_width="match_parent"
-            android:layout_marginStart="8dp"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:text="A.I."
-                android:id="@+id/text_quote_name"
-                android:layout_marginTop="4dp"
-                android:textSize="12sp"
-                android:textColor="@android:color/white"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:textColor="@android:color/darker_gray"
-                android:text="\@merrick_luo"
-                android:id="@+id/text_quote_id"
-                android:layout_marginStart="4dp"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:layout_alignTop="@id/text_quote_name"
-                android:layout_toEndOf="@id/text_quote_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:text="1h"
-                android:visibility="gone"
-                android:layout_marginEnd="8dp"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="12sp"
-                android:layout_alignParentEnd="true"
-                android:id="@+id/text_quote_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </RelativeLayout>
-
-        <TextView
-            android:text="This is a long tweet xsldkfjaslkdfjlaskdfjlaskjf;askdfja;lskdfjla;skfjlaskdfjalsdjflaskdfjlaskdfj"
-            android:id="@+id/text_quote_tweet"
-            android:textColor="@android:color/white"
-            android:layout_alignStart="@id/layout_quote_id"
-            android:layout_marginEnd="8dp"
-            android:layout_below="@id/layout_quote_id"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </RelativeLayout>
+        android:layout_margin="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <TextView
         android:text="via twicco"
         android:textColor="@android:color/darker_gray"
         android:layout_alignStart="@id/layout_id"
         android:layout_below="@id/layout_quote"
+        android:layout_marginEnd="12dp"
         android:textSize="12sp"
         android:layout_marginTop="4dp"
         android:id="@+id/text_via"
@@ -143,7 +93,8 @@
         android:id="@+id/text_retweet"
         android:layout_below="@id/text_via"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="12dp"
         android:textSize="12sp"
         android:textColor="@android:color/darker_gray"
         android:layout_width="wrap_content"

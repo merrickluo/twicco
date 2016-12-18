@@ -1,6 +1,7 @@
 package ninja.luois.twicco.common
 
 import android.app.Application
+import com.facebook.drawee.backends.pipeline.Fresco
 import com.twitter.sdk.android.core.TwitterAuthConfig
 import com.twitter.sdk.android.core.TwitterCore
 import io.fabric.sdk.android.Fabric
@@ -16,5 +17,7 @@ class Application : Application() {
                 getString(R.string.twitter_secret))
 
         Fabric.with(this, TwitterCore(config))
+
+        Fresco.initialize(this)
     }
 }
