@@ -6,8 +6,10 @@ import ninja.luois.twicco.timeline.provider.TimelineProvider
 import rx.Observable
 
 class UserFragment : TimelineFragment() {
-    override val tweetsData: Observable<List<Tweet>>
-        get() = TimelineProvider.userTimeline_()
+    override val tweetLoader: (Long?, Long?) -> Observable<List<Tweet>>
+        get() = { sinceId, maxId ->
+            TimelineProvider.userTimeline_(sinceId = sinceId, maxId = maxId)
+        }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<android.support.v4.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/refresh_layout_timeline"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -9,4 +10,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-</RelativeLayout>
+    <LinearLayout
+        android:background="@android:color/transparent"
+        android:orientation="vertical"
+        android:id="@+id/footer_timeline"
+        android:layout_width="match_parent"
+        android:layout_height="48dp">
+
+        <TextView
+            android:text="Loading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+</android.support.v4.widget.SwipeRefreshLayout>

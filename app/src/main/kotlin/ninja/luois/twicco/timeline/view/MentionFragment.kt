@@ -6,9 +6,10 @@ import ninja.luois.twicco.timeline.provider.TimelineProvider
 import rx.Observable
 
 class MentionFragment : TimelineFragment() {
-
-    override val tweetsData: Observable<List<Tweet>>
-        get() = TimelineProvider.mentionTimeline_()
+    override val tweetLoader: (Long?, Long?) -> Observable<List<Tweet>>
+        get() = { sinceId, maxId ->
+            TimelineProvider.mentionTimeline_(sinceId, maxId)
+        }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)

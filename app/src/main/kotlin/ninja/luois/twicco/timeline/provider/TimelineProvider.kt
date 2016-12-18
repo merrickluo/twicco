@@ -16,10 +16,10 @@ object TimelineProvider {
         userName = TwitterCore.getInstance().sessionManager.activeSession.userName
     }
 
-    fun homeTimeline_(): Observable<List<Tweet>> {
+    fun homeTimeline_(sinceId: Long? = null, maxId: Long? = null): Observable<List<Tweet>> {
         return bgObservable { s ->
             try {
-                val resp = service.homeTimeline(100, null, null, null, null, null, null)
+                val resp = service.homeTimeline(20, sinceId, maxId, null, null, null, null)
                         .execute()
                 if (resp.isSuccessful) {
                     s.onNext(resp.body())
@@ -33,10 +33,10 @@ object TimelineProvider {
         }
     }
 
-    fun mentionTimeline_(): Observable<List<Tweet>> {
+    fun mentionTimeline_(sinceId: Long? = null, maxId: Long? = null): Observable<List<Tweet>> {
          return bgObservable { s ->
             try {
-                val resp = service.mentionsTimeline(100, null, null, null, null, null)
+                val resp = service.mentionsTimeline(20, null, null, null, null, null)
                         .execute()
                 if (resp.isSuccessful) {
                     s.onNext(resp.body())
@@ -50,7 +50,9 @@ object TimelineProvider {
         }
     }
 
-    fun userTimeline_(screenName: String = userName): Observable<List<Tweet>> {
+    fun userTimeline_(screenName: String = userName,
+                      sinceId: Long? = null,
+                      maxId: Long? = null): Observable<List<Tweet>> {
          return bgObservable { s ->
             try {
                 val resp = service
