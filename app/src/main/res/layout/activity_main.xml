@@ -27,18 +27,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"/>
 
-            <android.support.design.widget.FloatingActionButton
-                app:backgroundTint="@android:color/transparent"
-                app:borderWidth="0dp"
-                app:fabSize="normal"
+            <ImageButton
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:background="@drawable/shape_round_button"
                 android:id="@+id/button_new_tweet"
                 android:layout_alignParentEnd="true"
-                android:layout_marginEnd="12dp"
+                android:layout_marginEnd="8dp"
                 android:layout_marginBottom="12dp"
                 android:layout_above="@android:id/tabs"
                 android:src="@drawable/ic_new_tweet"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="48dp"
+                android:layout_height="48dp" />
 
         </RelativeLayout>
 

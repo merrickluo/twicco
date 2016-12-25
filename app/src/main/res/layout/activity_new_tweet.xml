@@ -22,7 +22,7 @@
         android:layout_height="wrap_content">
 
         <Button
-            android:background="@android:color/transparent"
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:drawableStart="@drawable/ic_select_image"
             android:id="@+id/button_image"
             android:textAllCaps="false"
@@ -38,7 +38,7 @@
             android:layout_height="48dp" />
 
         <Button
-            android:background="@android:color/transparent"
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:drawableStart="@drawable/ic_send"
             android:id="@+id/button_tweet"
             android:text="@string/tweet_button"
@@ -66,7 +66,6 @@
         android:visibility="gone"
         android:layout_alignEnd="@id/text_tweet"
         android:layout_alignBottom="@id/text_tweet"
-        android:background="@android:color/holo_red_dark"
         android:id="@+id/reply_tweet_view"
         android:layout_width="120dp"
         android:layout_height="120dp" />

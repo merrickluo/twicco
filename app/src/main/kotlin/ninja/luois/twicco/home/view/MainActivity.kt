@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.annotation.DrawableRes
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.FragmentTabHost
+import android.widget.Button
 import android.widget.ImageButton
 import com.jakewharton.rxbinding.view.clicks
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
@@ -17,7 +18,7 @@ import ninja.luois.twicco.timeline.view.*
 class MainActivity : Activity() {
 
     val tabHost by bindView<FragmentTabHost>(R.id.tab_host)
-    val newTweetButton by bindView<FloatingActionButton>(R.id.button_new_tweet)
+    val newTweetButton by bindView<ImageButton>(R.id.button_new_tweet)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
