@@ -71,11 +71,13 @@ class NewTweetActivity : Activity() {
     companion object {
         private val EXTRA_TWEET_TYPE = "extra_tweet_type"
         private val EXTRA_TWEET_ID = "extra_tweet_id"
+        private val EXTRA_TWEET_TEXT = "extra_tweet_text"
 
-        fun start(ctx: Context, type: Type, tweetId: Long?) {
+        fun start(ctx: Context, type: Type, tweetId: Long? = null, text: String = "") {
             val i = Intent(ctx, NewTweetActivity::class.java)
             i.putExtra(EXTRA_TWEET_TYPE, type)
             i.putExtra(EXTRA_TWEET_ID, tweetId)
+            i.putExtra(EXTRA_TWEET_TEXT, text)
             ctx.startActivity(i)
         }
     }
@@ -101,6 +103,9 @@ class NewTweetActivity : Activity() {
 
     private val quoteId: Long?
         get() = intent.getSerializableExtra(EXTRA_TWEET_ID) as Long?
+
+    private val quoteText: String
+        get() = intent.getSerializableExtra(EXTRA_TWEET_TEXT) as String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -129,9 +134,18 @@ class NewTweetActivity : Activity() {
                 .bindToLifecycle(this)
                 .filterNotNull()
                 .subscribe {
+                    tweet.quote = "http://twitter.com/${it.user.screenName}/statuses/${it.idStr}"
                     refreshTitle()
                     refreshQuoteView(it)
                 }
+
+        // setup new tweet
+        if (type == Type.Quote) {
+            tweet.quote = "http://twitter.com/statuses/$quoteId"
+        }
+        tweet.replyTo = quoteId
+                tweetEditText.setText(quoteText, TextView.BufferType.EDITABLE)
+        tweetEditText.setSelection(quoteText.length)
 
         // check both text count and image count
         Observable.combineLatest(tweetEditText.textChanges(),
@@ -181,6 +195,7 @@ class NewTweetActivity : Activity() {
     }
 
     private fun refreshQuoteView(tweet: Tweet) {
+        quoteTweetView.visibility = View.VISIBLE
         val vm = TweetViewModel(tweet)
         val view = LayoutInflater.from(this)
                 .inflate(R.layout.item_quote_tweet, quoteTweetView, false)

@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory
 import android.util.Log
 import com.twitter.sdk.android.core.TwitterApiClient
 import com.twitter.sdk.android.core.TwitterCore
+import com.twitter.sdk.android.core.models.Tweet
 import ninja.luois.twicco.extension.observable.bgSingle
 import okhttp3.MediaType
 import okhttp3.RequestBody
@@ -15,6 +16,8 @@ import java.io.File
 
 class ComposingTweet {
     var text: String? = null
+    var replyTo: Long? = null
+    var quote: String = ""
     var medias: List<Media> = emptyList()
 }
 data class Media(val id: String, val filepath: String)
@@ -31,9 +34,10 @@ object NewTweetProvider {
         return bgSingle { s ->
             try {
                 val mediaIds = tweet.medias.map { it.id }.joinToString(",")
+                val text = "${tweet.text} ${tweet.quote}"
 
-                val resp = client.statusesService.update(tweet.text,
-                        null, null, null, null, null, null, null, mediaIds)
+                val resp = client.statusesService.update(text,
+                        tweet.replyTo, null, null, null, null, null, null, mediaIds)
                         .execute()
 
                 if (resp.isSuccessful) {
@@ -54,7 +58,7 @@ object NewTweetProvider {
                 files.forEach {
                     val f = File(it)
                     Log.e("Tweet", "image size ${f.length()}")
-                    var body = if (f.length() > 3*1024*1024) {
+                    val body = if (f.length() > 3*1024*1024) {
                         val image = resizedImageData(it)
                         RequestBody.create(MediaType.parse("image/webp"), image)
                     } else {

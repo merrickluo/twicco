@@ -71,6 +71,7 @@
 
         <!-- placeholder for reply tweet -->
         <FrameLayout
+            android:visibility="gone"
             android:background="@drawable/shape_quote_tweet"
             android:id="@+id/reply_tweet_view"
             android:layout_alignParentBottom="true"

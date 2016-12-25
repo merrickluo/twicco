@@ -118,9 +118,11 @@ abstract class TimelineFragment : Fragment() {
                             .subscribe { adapter.update(t) }
                 }
                 Action.Reply -> {
-                    NewTweetActivity.start(activity, NewTweetActivity.Type.Reply, t.id)
+                    val prefix = "@${t.user.screenName} "
+                    NewTweetActivity.start(activity, NewTweetActivity.Type.Reply, t.id, prefix)
                 }
                 Action.Quote -> {
+
                     NewTweetActivity.start(activity, NewTweetActivity.Type.Quote, t.id)
                 }
             }
