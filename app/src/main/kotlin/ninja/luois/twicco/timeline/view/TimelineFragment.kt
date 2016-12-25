@@ -16,6 +16,7 @@ import com.twitter.sdk.android.core.models.Tweet
 import kotterknife.bindView
 import ninja.luois.twicco.R
 import ninja.luois.twicco.common.Fragment
+import ninja.luois.twicco.compose.view.NewTweetActivity
 import ninja.luois.twicco.extension.observable.Variable
 import ninja.luois.twicco.extension.observable.subscribeTo
 import ninja.luois.twicco.extension.ui.showShortToast
@@ -115,6 +116,12 @@ abstract class TimelineFragment : Fragment() {
                             .bindToLifecycle(this)
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe { adapter.update(t) }
+                }
+                Action.Reply -> {
+                    NewTweetActivity.start(activity, NewTweetActivity.Type.Reply, t.id)
+                }
+                Action.Quote -> {
+                    NewTweetActivity.start(activity, NewTweetActivity.Type.Quote, t.id)
                 }
             }
         }

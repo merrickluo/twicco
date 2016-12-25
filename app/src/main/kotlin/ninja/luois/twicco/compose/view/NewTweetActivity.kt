@@ -1,9 +1,11 @@
 package ninja.luois.twicco.compose.view
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
@@ -14,25 +16,34 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.FrameLayout
 import android.widget.TextView
+import com.facebook.drawee.view.SimpleDraweeView
 import com.jakewharton.rxbinding.view.clicks
 import com.jakewharton.rxbinding.view.enabled
 import com.jakewharton.rxbinding.widget.text
 import com.jakewharton.rxbinding.widget.textChanges
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
+import com.twitter.sdk.android.core.models.Tweet
 import kotterknife.bindView
 import ninja.luois.twicco.R
 import ninja.luois.twicco.common.Activity
 import ninja.luois.twicco.compose.provider.ComposingTweet
 import ninja.luois.twicco.compose.provider.Media
 import ninja.luois.twicco.compose.provider.NewTweetProvider
+import ninja.luois.twicco.extension.observable.Variable
 import ninja.luois.twicco.extension.observable.subscribeTo
 import ninja.luois.twicco.extension.observable.withDialog
 import ninja.luois.twicco.extension.ui.showShortToast
+import ninja.luois.twicco.timeline.provider.TimelineProvider
+import ninja.luois.twicco.timeline.viewmodel.TweetViewModel
 import rx.Observable
 import rx.android.schedulers.AndroidSchedulers
+import rx.lang.kotlin.filterNotNull
 import java.io.File
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
@@ -45,6 +56,30 @@ private fun String.isValidTweet(): Boolean {
 
 class NewTweetActivity : Activity() {
 
+    enum class Type {
+        New, Reply, Quote;
+
+        fun displayName(): String {
+            return when (this) {
+                New -> "new tweet"
+                Reply -> "reply to"
+                Quote -> "quoting"
+            }
+        }
+    }
+
+    companion object {
+        private val EXTRA_TWEET_TYPE = "extra_tweet_type"
+        private val EXTRA_TWEET_ID = "extra_tweet_id"
+
+        fun start(ctx: Context, type: Type, tweetId: Long?) {
+            val i = Intent(ctx, NewTweetActivity::class.java)
+            i.putExtra(EXTRA_TWEET_TYPE, type)
+            i.putExtra(EXTRA_TWEET_ID, tweetId)
+            ctx.startActivity(i)
+        }
+    }
+
     //Constants
     val kRequestPermissionCamera = 101
 
@@ -55,18 +90,47 @@ class NewTweetActivity : Activity() {
     val tweetButton by bindView<Button>(R.id.button_tweet)
     val tweetCountText by bindView<TextView>(R.id.text_tweet_count)
     val imageButton by bindView<Button>(R.id.button_image)
+    val quoteTweetView by bindView<FrameLayout>(R.id.reply_tweet_view)
 
     val tweet = ComposingTweet()
+
+    var quoteTweet = Variable<Tweet?>(null)
+
+    private val type: Type
+        get() =  intent.getSerializableExtra(EXTRA_TWEET_TYPE) as Type
+
+    private val quoteId: Long?
+        get() = intent.getSerializableExtra(EXTRA_TWEET_ID) as Long?
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_tweet)
-        title = "new tweet"
+
+        refreshTitle()
 
         tweetButton.clicks()
                 .bindToLifecycle(this)
                 .subscribe {
                     tweet()
+                }
+
+        quoteId?.let {
+            TimelineProvider.tweet_(it)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .bindToLifecycle(this)
+                    .subscribeTo {
+                        next { quoteTweet.value = it }
+                        error { /* ignore here */ }
+                    }
+        }
+
+        quoteTweet.asObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .bindToLifecycle(this)
+                .filterNotNull()
+                .subscribe {
+                    refreshTitle()
+                    refreshQuoteView(it)
                 }
 
         // check both text count and image count
@@ -104,6 +168,38 @@ class NewTweetActivity : Activity() {
                     }
                     error = { showShortToast("cannot upload image") }
                 }
+    }
+
+    private fun refreshTitle() {
+        val sb = StringBuilder(this.type.displayName())
+        quoteTweet.value?.let {
+            sb.append(" @")
+            sb.append(it.user.screenName)
+        }
+
+        title = sb.toString()
+    }
+
+    private fun refreshQuoteView(tweet: Tweet) {
+        val vm = TweetViewModel(tweet)
+        val view = LayoutInflater.from(this)
+                .inflate(R.layout.item_quote_tweet, quoteTweetView, false)
+        val idView = view.findViewById(R.id.text_quote_id) as TextView
+        val nameView = view.findViewById(R.id.text_quote_name) as TextView
+        val tweetView = view.findViewById(R.id.text_quote_tweet) as TextView
+        val imageView = view.findViewById(R.id.image_quote_tweet) as SimpleDraweeView
+
+        idView.text = vm.id
+        nameView.text = vm.name
+        tweetView.text = vm.text
+
+        imageView.visibility = View.GONE
+        vm.medias.firstOrNull()?.let {
+            imageView.visibility = View.VISIBLE
+            imageView.setImageURI(Uri.parse(it.url), this)
+        }
+
+        quoteTweetView.addView(view)
     }
 
     private fun clearMediaAt(position: Int) {

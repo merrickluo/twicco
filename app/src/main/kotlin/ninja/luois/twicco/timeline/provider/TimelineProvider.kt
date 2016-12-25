@@ -3,6 +3,7 @@ package ninja.luois.twicco.timeline.provider
 import com.twitter.sdk.android.core.TwitterCore
 import com.twitter.sdk.android.core.models.Tweet
 import com.twitter.sdk.android.core.services.StatusesService
+import ninja.luois.twicco.extension.observable.Variable
 import ninja.luois.twicco.extension.observable.bgObservable
 import ninja.luois.twicco.extension.observable.bgSingle
 import rx.Observable
@@ -85,6 +86,19 @@ object TimelineProvider {
                     .userTimeline(null, screenName, 100, sinceId, maxId, null, null, null, true)
                     .execute()
 
+            if (resp.isSuccessful) {
+                resp.body() to null
+            } else {
+                null to Exception(resp.errorBody().string())
+            }
+        }
+    }
+
+    fun tweet_(id: Long): Observable<Tweet> {
+        return tlObservable {
+            val resp = service
+                    .show(id, null, null, null)
+                    .execute()
             if (resp.isSuccessful) {
                 resp.body() to null
             } else {

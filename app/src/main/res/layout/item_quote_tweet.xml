@@ -34,6 +34,7 @@
             android:textColor="@android:color/darker_gray"
             android:text="\@merrick_luo"
             android:id="@+id/text_quote_id"
+            android:maxLines="1"
             android:layout_marginStart="4dp"
             android:textSize="12sp"
             android:textStyle="bold"

@@ -30,9 +30,7 @@ class MainActivity : Activity() {
     private fun setupFab() {
         newTweetButton.clicks()
                 .bindToLifecycle(this)
-                .subscribe {
-                    startActivity(Intent(this, NewTweetActivity::class.java))
-                }
+                .subscribe { NewTweetActivity.start(this, NewTweetActivity.Type.New, null) }
     }
 
     private fun setupTabHost() {
