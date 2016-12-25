@@ -1,19 +1,19 @@
 package ninja.luois.twicco.home.view
 
-import android.content.Intent
 import android.os.Bundle
 import android.support.annotation.DrawableRes
-import android.support.design.widget.FloatingActionButton
-import android.support.v4.app.FragmentTabHost
-import android.widget.Button
 import android.widget.ImageButton
 import com.jakewharton.rxbinding.view.clicks
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
 import kotterknife.bindView
 import ninja.luois.twicco.R
 import ninja.luois.twicco.common.Activity
+import ninja.luois.twicco.common.FragmentTabHost
 import ninja.luois.twicco.compose.view.NewTweetActivity
-import ninja.luois.twicco.timeline.view.*
+import ninja.luois.twicco.timeline.view.HomeFragment
+import ninja.luois.twicco.timeline.view.MentionFragment
+import ninja.luois.twicco.timeline.view.MessageFragment
+import ninja.luois.twicco.timeline.view.UserFragment
 
 class MainActivity : Activity() {
 

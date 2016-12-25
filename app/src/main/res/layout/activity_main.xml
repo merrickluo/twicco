@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v4.app.FragmentTabHost
+    <ninja.luois.twicco.common.FragmentTabHost
         android:id="@+id/tab_host"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
@@ -41,7 +41,7 @@
 
         </RelativeLayout>
 
-    </android.support.v4.app.FragmentTabHost>
+    </ninja.luois.twicco.common.FragmentTabHost>
 
 
 </RelativeLayout>

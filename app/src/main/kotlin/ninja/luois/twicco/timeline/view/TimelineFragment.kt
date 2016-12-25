@@ -13,7 +13,6 @@ import com.jakewharton.rxbinding.support.v7.widget.scrollEvents
 import com.jakewharton.rxbinding.view.visibility
 import com.trello.rxlifecycle.kotlin.bindToLifecycle
 import com.twitter.sdk.android.core.models.Tweet
-import kotterknife.bindView
 import ninja.luois.twicco.R
 import ninja.luois.twicco.common.Fragment
 import ninja.luois.twicco.compose.view.NewTweetActivity
@@ -30,8 +29,8 @@ import rx.subjects.PublishSubject
 import kotlin.properties.Delegates
 
 abstract class TimelineFragment : Fragment() {
-    val listView : RecyclerView by bindView(R.id.list_timeline)
-    val refreshLayout: SwipeRefreshLayout by bindView(R.id.refresh_layout_timeline)
+    var listView : RecyclerView by Delegates.notNull()
+    var refreshLayout: SwipeRefreshLayout by Delegates.notNull()
 
     var footerView: View by Delegates.notNull()
     var footerProgressBar: View by Delegates.notNull()
@@ -53,9 +52,13 @@ abstract class TimelineFragment : Fragment() {
         footerView = inflater.inflate(R.layout.item_timeline_footer, null, false)
         footerProgressBar = footerView.findViewById(R.id.footer_timeline_progress)
 
-        return inflater.inflate(R.layout.fragment_timeline, container, false)
-    }
+        val rootView = inflater.inflate(R.layout.fragment_timeline, container, false)
+        listView = rootView.findViewById(R.id.list_timeline) as RecyclerView
+        refreshLayout = rootView.findViewById(R.id.refresh_layout_timeline) as SwipeRefreshLayout
 
+        return rootView
+    }
+    private val lm = LinearLayoutManager(activity)
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
@@ -78,7 +81,6 @@ abstract class TimelineFragment : Fragment() {
                 .subscribe(footerProgressBar.visibility())
 
 
-        val lm = LinearLayoutManager(activity)
         listView.layoutManager = lm
         // load more when about to scroll down to bottom
         listView.scrollEvents()
@@ -127,8 +129,8 @@ abstract class TimelineFragment : Fragment() {
                 }
             }
         }
-        listView.adapter = adapter
 
+        listView.adapter = adapter
         tweets_.asObservable().bindToLifecycle(this)
                 .observeOn(AndroidSchedulers.mainThread())
                 .filterNotNull()
@@ -140,6 +142,7 @@ abstract class TimelineFragment : Fragment() {
                 }
 
         refresh()
+
     }
 
     fun refresh() {
