@@ -5,6 +5,7 @@ import com.facebook.drawee.backends.pipeline.Fresco
 import com.twitter.sdk.android.core.TwitterAuthConfig
 import com.twitter.sdk.android.core.TwitterCore
 import io.fabric.sdk.android.Fabric
+import io.realm.Realm
 import ninja.luois.twicco.R
 
 class Application : Application() {
@@ -19,5 +20,7 @@ class Application : Application() {
         Fabric.with(this, TwitterCore(config))
 
         Fresco.initialize(this)
+
+        Realm.init(this)
     }
 }

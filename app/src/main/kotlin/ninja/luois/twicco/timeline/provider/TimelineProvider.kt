@@ -1,9 +1,10 @@
 package ninja.luois.twicco.timeline.provider
 
 import com.twitter.sdk.android.core.TwitterCore
-import com.twitter.sdk.android.core.models.Tweet
+import com.twitter.sdk.android.core.models.*
 import com.twitter.sdk.android.core.services.StatusesService
-import ninja.luois.twicco.extension.observable.Variable
+import io.realm.Realm
+import io.realm.RealmList
 import ninja.luois.twicco.extension.observable.bgObservable
 import ninja.luois.twicco.extension.observable.bgSingle
 import rx.Observable
@@ -54,6 +55,9 @@ object TimelineProvider {
 
     fun homeTimeline_(sinceId: Long? = null, maxId: Long? = null): Observable<List<Tweet>> {
         return tlObservable {
+            val ts = Realm.getDefaultInstance()
+                    .where(ninja.luois.twicco.common.model.Tweet::class.java)
+                    .findAll()
             val resp = service
                     .homeTimeline(100, sinceId, maxId, null, null, null, null)
                     .execute()
@@ -62,7 +66,7 @@ object TimelineProvider {
             } else {
                 null to Exception(resp.errorBody().string())
             }
-        }
+        }.doOnNext { saveToDB(it) }
     }
 
     fun mentionTimeline_(sinceId: Long? = null, maxId: Long? = null): Observable<List<Tweet>> {
@@ -154,6 +158,176 @@ object TimelineProvider {
              }
          }
     }
+
+    private fun saveToDB(tweets: List<Tweet>) {
+        Realm.getDefaultInstance().executeTransaction { realm ->
+            try {
+                tweets.map(Tweet::toDBTweet)
+                        .forEach {
+                            realm.insertOrUpdate(it)
+                        }
+            } catch (e: Throwable) {
+                e.printStackTrace()
+            }
+        }
+    }
+}
+
+fun Coordinates.toDBCoordinates(): ninja.luois.twicco.common.model.Coordinates {
+    return ninja.luois.twicco.common.model.Coordinates(
+            this.longitude,
+            this.latitude,
+            this.type
+    )
+}
+
+fun UrlEntity.toDBEntity(): ninja.luois.twicco.common.model.UrlEntity {
+    return ninja.luois.twicco.common.model.UrlEntity(
+            this.url,
+            this.expandedUrl,
+            this.displayUrl,
+            this.start,
+            this.end
+    )
+}
+
+fun MentionEntity.toDBEntity(): ninja.luois.twicco.common.model.MentionEntity {
+    return ninja.luois.twicco.common.model.MentionEntity(
+            this.id,
+            this.idStr,
+            this.name,
+            this.screenName,
+            this.start,
+            this.end
+    )
+}
+
+fun MediaEntity.toDBEntity(): ninja.luois.twicco.common.model.MediaEntity {
+    return ninja.luois.twicco.common.model.MediaEntity(
+            this.id,
+            this.idStr,
+            this.mediaUrl,
+            this.mediaUrlHttps,
+            this.sourceStatusId,
+            this.type,
+            this.altText,
+            this.start,
+            this.end
+    )
+}
+
+fun HashtagEntity.toDBEntity(): ninja.luois.twicco.common.model.HashtagEntity {
+    return ninja.luois.twicco.common.model.HashtagEntity(
+            this.text,
+            this.start,
+            this.end
+    )
+}
+
+fun TweetEntities.toDBEntities(): ninja.luois.twicco.common.model.TweetEntities {
+    val urls = this.urls?.let {
+        RealmList(*(it.map { it.toDBEntity() }.toTypedArray()))
+    } ?: RealmList()
+    val mentions = this.userMentions?.let {
+        RealmList(*(it.map { it.toDBEntity() }.toTypedArray()))
+    } ?: RealmList()
+    val media = this.media?.let {
+        RealmList(*(it.map { it.toDBEntity() }.toTypedArray()))
+    } ?: RealmList()
+    val hashtags = this.hashtags?.let {
+        RealmList(*(it.map { it.toDBEntity() }.toTypedArray()))
+    } ?: RealmList()
+
+    return ninja.luois.twicco.common.model.TweetEntities(
+            urls,
+            mentions,
+            media,
+            hashtags
+    )
+}
+
+fun User.toDBUser(): ninja.luois.twicco.common.model.User {
+    return ninja.luois.twicco.common.model.User(
+            this.contributorsEnabled,
+            this.createdAt,
+            this.defaultProfile,
+            this.defaultProfileImage,
+            this.description,
+            this.email,
+            //this.entities,
+            this.favouritesCount,
+            this.followRequestSent,
+            this.followersCount,
+            this.friendsCount,
+            this.geoEnabled,
+            this.id,
+            this.idStr,
+            this.isTranslator,
+            this.lang,
+            this.listedCount,
+            this.location,
+            this.name,
+            this.profileBackgroundColor,
+            this.profileBackgroundImageUrl,
+            this.profileBackgroundImageUrlHttps,
+            this.profileBackgroundTile,
+            this.profileBannerUrl,
+            this.profileImageUrl,
+            this.profileImageUrlHttps,
+            this.profileLinkColor,
+            this.profileSidebarBorderColor,
+            this.profileSidebarFillColor,
+            this.profileTextColor,
+            this.profileUseBackgroundImage,
+            this.protectedUser,
+            this.screenName,
+            this.showAllInlineMedia,
+            this.status?.toDBTweet(),
+            this.statusesCount,
+            this.timeZone,
+            this.url,
+            this.utcOffset,
+            this.verified,
+            RealmList(),
+            this.withheldScope
+
+    )
+}
+
+fun Tweet.toDBTweet(): ninja.luois.twicco.common.model.Tweet {
+    return ninja.luois.twicco.common.model.Tweet(
+            this.id,
+            this.idStr,
+            this.coordinates?.toDBCoordinates(),
+            this.createdAt,
+            this.entities?.toDBEntities(),
+            this.extendedEtities?.toDBEntities(),
+            this.favoriteCount,
+            this.favorited,
+            this.filterLevel,
+            this.inReplyToScreenName,
+            this.inReplyToStatusId,
+            this.inReplyToStatusIdStr,
+            this.inReplyToUserId,
+            this.inReplyToUserIdStr,
+            this.lang,
+            this.possiblySensitive,
+            this.quotedStatusId,
+            this.quotedStatusIdStr,
+            this.quotedStatus?.toDBTweet(),
+            this.retweetCount,
+            this.retweeted,
+            this.retweetedStatus?.toDBTweet(),
+            this.source,
+            this.text,
+            this.displayTextRange[0],
+            this.displayTextRange[1],
+            this.truncated,
+            this.user?.toDBUser(),
+            this.withheldCopyright,
+            RealmList(),
+            this.withheldScope
+    )
 }
 
 
