@@ -16,8 +16,10 @@
 	"devDependencies": {
 		"babel-jest": "19.0.0",
 		"babel-preset-react-native": "1.9.1",
+		"eslint": "^3.18.0",
 		"jest": "19.0.2",
-		"react-test-renderer": "~15.4.1"
+		"react-test-renderer": "~15.4.1",
+		"tern": "^0.21.0"
 	},
 	"jest": {
 		"preset": "react-native"
