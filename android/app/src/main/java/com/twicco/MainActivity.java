@@ -1,4 +1,4 @@
-package com.twicco;
+package ninja.luois.twicco;
 
 import com.facebook.react.ReactActivity;
 
