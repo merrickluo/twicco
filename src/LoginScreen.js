@@ -14,14 +14,16 @@ import TwitterKit from 'react-native-fabric-twitterkit'
 
 export default class LoginScreen extends React.Component {
   login() {
-    TwitterKit.login(async (err, result) => {
+    TwitterKit.login((err, result) => {
       if (err) {
         console.log(err)
         Alert.alert('login failed')
       } else {
-        await AsyncStorage.setItem('@Account:login', 'true')
         console.log(result)
-        Actions.home()
+        AsyncStorage.setItem('@Account:login', 'true')
+               .then(() => {
+                 Actions.home()
+               })
       }
     })
   }

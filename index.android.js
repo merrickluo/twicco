@@ -50,6 +50,9 @@ export default class twicco extends Component {
       <Router>
         <Scene key="root">
           <Scene hideNavBar
+                 key="splash"
+                 component={Splash} />
+          <Scene hideNavBar
                  key="login"
                  component={LoginScreen} />
           <Scene key="home"
