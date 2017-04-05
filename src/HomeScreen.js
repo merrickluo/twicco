@@ -8,15 +8,25 @@ import {
   Text,
 } from 'react-native'
 
+import TwitterKit from 'react-native-fabric-twitterkit'
+import LinearGradient from 'react-native-linear-gradient'
+
 import { Actions } from 'react-native-router-flux'
 
-import TwitterKit from 'react-native-fabric-twitterkit'
+import NavComponent from './NavComponent.js'
 
-
-export default class HomeScreen extends React.Component {
+export default class HomeScreen extends NavComponent {
   render() {
     return (
-      <Text>HomeScreen</Text>
+      <View style={styles.container}>
+        <Text>HomeScreen</Text>
+      </View>
     )
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    marginTop: 32,
+  }
+})

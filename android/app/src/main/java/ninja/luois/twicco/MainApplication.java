@@ -15,6 +15,8 @@ import io.fabric.sdk.android.Fabric;
 import com.twitter.sdk.android.core.TwitterCore;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
 import com.tkporter.fabrictwitterkit.FabricTwitterKitPackage;
+import com.BV.LinearGradient.LinearGradientPackage;
+
 import ninja.luois.twicco.R;
 
 
@@ -30,7 +32,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           FabricTwitterKitPackage.getInstance(),
-          new MainReactPackage()
+          new MainReactPackage(),
+          new LinearGradientPackage()
       );
     }
   };
