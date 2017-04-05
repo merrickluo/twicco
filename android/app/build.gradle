@@ -95,6 +95,8 @@ android {
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
+        resValue "string", "twitter_key", twitter_key
+        resValue "string", "twitter_secret", twitter_secret
     }
     splits {
         abi {

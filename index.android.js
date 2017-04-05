@@ -9,25 +9,55 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
-  View
+  View,
+  AsyncStorage,
 } from 'react-native';
+
+import {
+  Router,
+  Scene,
+  Actions,
+  ActionConst,
+} from 'react-native-router-flux'
+
+import LoginScreen from './src/LoginScreen.js'
+import HomeScreen from './src/HomeScreen.js'
+
+class Splash extends React.Component {
+  componentDidMount() {
+    AsyncStorage
+      .getItem('@Account:login')
+      .then((value) => {
+        if (value) {
+          Actions.home()
+        } else {
+          Actions.login()
+        }
+      })
+      .catch(() => {
+        Actions.login()
+      })
+  }
+
+  render() {
+    return (<View />)
+  }
+}
 
 export default class twicco extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={styles.instructions}>
-          Double tap R on your keyboard to reload,{'\n'}
-          Shake or press menu button for dev menu
-        </Text>
-      </View>
-    );
+      <Router>
+        <Scene key="root">
+          <Scene hideNavBar
+                 key="login"
+                 component={LoginScreen} />
+          <Scene key="home"
+                 component={HomeScreen}
+                 type={ActionConst.REPLACE} />
+          </Scene>
+      </Router>
+    )
   }
 }
 
