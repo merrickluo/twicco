@@ -8,7 +8,7 @@ import {
 
 import LinearGradient from 'react-native-linear-gradient';
 
-export default class NavComponent extends React.Component {
+export default class BaseScreen extends React.Component {
   static renderNavigationBar() {
     return (
       <LinearGradient colors={['#383838', '#222222', '#222222']} style={styles.bar}>

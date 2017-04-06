@@ -13,9 +13,9 @@ import LinearGradient from 'react-native-linear-gradient'
 
 import { Actions } from 'react-native-router-flux'
 
-import NavComponent from './NavComponent.js'
+import BaseScreen from './BaseScreen.js'
 
-export default class HomeScreen extends NavComponent {
+export default class HomeScreen extends BaseScreen {
   render() {
     return (
       <View style={styles.container}>
