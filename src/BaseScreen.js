@@ -1,19 +1,28 @@
 import React from 'react'
-import Strings from './Strings.js'
+import Strings from './res/Strings.js'
 import {
   StyleSheet,
   View,
   Text,
 } from 'react-native'
 
-import LinearGradient from 'react-native-linear-gradient';
+import LinearGradient from 'react-native-linear-gradient'
+import Colors from './res/Colors.js'
 
 export default class BaseScreen extends React.Component {
   static renderNavigationBar() {
     return (
-      <LinearGradient colors={['#383838', '#222222', '#222222']} style={styles.bar}>
+      <LinearGradient
+        colors={['#383838', '#222222', '#222222']}
+        style={styles.bar}
+      >
         <Text style={styles.title}>{Strings.appName}</Text>
       </LinearGradient>
+    )
+  }
+  render() {
+    return (
+      <View />
     )
   }
 }
@@ -30,6 +39,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 14,
-    color: '#ffffff',
+    color: Colors.white,
   },
 })

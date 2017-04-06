@@ -1,0 +1,47 @@
+{
+  "root": true,
+
+  "parser": "babel-eslint",
+
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+
+  "env": {
+    "es6": true,
+    "node": true
+  },
+
+  "plugins": [
+    "react",
+    "react-native"
+  ],
+
+  "global": [
+    "console"
+  ],
+
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:react-native/all"
+  ],
+
+  "rules": {
+    "max-len": [2, 100],
+    "indent": [2, 2],
+    "quotes": [2, "single"],
+    "semi": [2, "never"],
+    "no-console": 0,
+    "object-curly-spacing": [2, "always"],
+    "react/jsx-filename-extension": [2, { "extensions": [".js", ".jsx"] }],
+    "react/jsx-indent": [2, 2],
+    "react/jsx-indent-props": [2, 2],
+    "react/jsx-sort-props": [0],
+    "react/forbid-component-props": [0]
+  }
+}

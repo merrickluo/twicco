@@ -1,5 +1,5 @@
 import React from 'react'
-import Strings from './Strings.js'
+import Strings from './res/Strings.js'
 import {
   StyleSheet,
   View,
@@ -9,7 +9,6 @@ import {
 } from 'react-native'
 
 import { Actions } from 'react-native-router-flux'
-
 import TwitterKit from 'react-native-fabric-twitterkit'
 
 export default class LoginScreen extends React.Component {
@@ -30,7 +29,7 @@ export default class LoginScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Button title={Strings.connect} onPress={this.login}/>
+        <Button title={Strings.connect} onPress={this.login} />
       </View>
     )
   }
@@ -41,16 +40,5 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
   },
-  connect: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
+})

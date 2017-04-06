@@ -1,0 +1,13 @@
+{
+  "libs": [
+    "browser", "ecmascript"
+  ],
+  "plugins": {
+    "complete_strings": {},
+    "node": {},
+    "es_modules": {},
+    "requirejs": {
+      "baseURL": "./src"
+    }
+  }
+}
