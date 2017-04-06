@@ -8,8 +8,8 @@
 		"android": "react-native run-android"
 	},
 	"dependencies": {
-		"react": "~15.4.1",
-		"react-native": "0.42.3",
+		"react": "16.0.0-alpha.6",
+		"react-native": "0.43.1",
 		"react-native-fabric-twitterkit": "tkporter/react-native-fabric-twitterkit",
 		"react-native-linear-gradient": "^2.0.0",
 		"react-native-router-flux": "^3.38.0",
