@@ -21,7 +21,7 @@ export default class LoginScreen extends React.Component {
         console.log(result)
         AsyncStorage.setItem('@Account:login', 'true')
                .then(() => {
-                 Actions.home()
+                 Actions.main()
                })
       }
     })

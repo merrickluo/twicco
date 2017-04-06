@@ -9,7 +9,7 @@ export default class Splash extends React.Component {
       .getItem('@Account:login')
       .then((value) => {
         if (value) {
-          Actions.home({ type: ActionConst.RESET })
+          Actions.main({ type: ActionConst.RESET })
         } else {
           Actions.login({ type: ActionConst.RESET })
         }

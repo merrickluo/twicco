@@ -14,7 +14,7 @@ export default class HomeScreen extends BaseScreen {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Home</Text>
+        <Text>Mention</Text>
       </View>
     )
   }
