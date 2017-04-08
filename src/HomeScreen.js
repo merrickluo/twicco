@@ -14,7 +14,7 @@ import ToolBar from './ToolBar.js'
 export default class HomeScreen extends BaseScreen {
   render() {
     return (
-      <View>
+      <View style={{ backgroundColor: '#111' }}>
         <ToolBar />
         <View style={styles.container}>
           <Text>Home</Text>
@@ -27,5 +27,7 @@ export default class HomeScreen extends BaseScreen {
 const styles = StyleSheet.create({
   container: {
     marginTop: 32,
+    backgroundColor: '#111',
+    height: '100%',
   }
 })
