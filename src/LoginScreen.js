@@ -13,7 +13,7 @@ import TwitterKit from 'react-native-fabric-twitterkit'
 import BaseScreen from './BaseScreen.js'
 
 export default class LoginScreen extends BaseScreen {
-  handleLogin() {
+  handleLogin = () => {
     TwitterKit.login((err, result) => {
       if (err) {
         console.log(err)
