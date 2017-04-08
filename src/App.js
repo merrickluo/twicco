@@ -6,35 +6,67 @@
 
 import React from 'react'
 
-import {
-  Router,
-  Scene,
-  ActionConst,
-} from 'react-native-router-flux'
-
 import LoginScreen from './LoginScreen.js'
 import SplashScreen from './SplashScreen.js'
-import TabIcon from './TabIcon.js'
+//import TabIcon from './TabIcon.js'
 import HomeScreen from './HomeScreen.js'
 import MentionScreen from './MentionScreen.js'
 import MessageScreen from './MessageScreen.js'
 import ProfileScreen from './ProfileScreen.js'
 
+import { StackNavigator, TabNavigator } from 'react-navigation'
+
+const MainScreen = TabNavigator({
+  home: {
+    title: 'Home',
+    screen: HomeScreen,
+  },
+  mention: {
+    title: 'Mention',
+    screen: MentionScreen,
+  },
+  message: {
+    title: 'Message',
+    screen: MessageScreen,
+  },
+  profile: {
+    title: 'Profile',
+    screen: ProfileScreen,
+  },
+}, {
+  tabBarPosition: 'bottom',
+  animationEnabled: false,
+  swipeEnabled: false,
+  tabBarOptions: {
+    showIcon: true,
+    showLabel: true,
+    activeTintColor: '#05BF7B',
+    inactiveTintColor: '#A1A1A1',
+    style: {
+      backgroundColor: 'transparent',
+    },
+  }
+})
+
+const RootNavigator = StackNavigator({
+  splash: {
+    screen: SplashScreen,
+  },
+  login: {
+    screen: LoginScreen,
+  },
+  main: {
+    screen: MainScreen,
+  }
+},{
+  initialRouteName: 'splash',
+  headerMode: 'none',
+})
+
 export default class App extends React.Component {
   render() {
     return (
-      <Router>
-        <Scene key="root">
-          <Scene hideNavBar key="splash" component={SplashScreen} />
-          <Scene hideNavBar key="login" component={LoginScreen} />
-          <Scene key="main" tabs type={ActionConst.REPLACE}>
-            <Scene key="home" title="home" icon={TabIcon} component={HomeScreen} />
-            <Scene key="mention" title="mention" icon={TabIcon} component={MentionScreen} />
-            <Scene key="message" title="message" icon={TabIcon} component={MessageScreen} />
-            <Scene key="profile" title="profile" icon={TabIcon} component={ProfileScreen} />
-          </Scene>
-        </Scene>
-      </Router>
+      <RootNavigator />
     )
   }
 }

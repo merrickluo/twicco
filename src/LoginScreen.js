@@ -8,11 +8,12 @@ import {
   AsyncStorage,
 } from 'react-native'
 
-import { Actions } from 'react-native-router-flux'
 import TwitterKit from 'react-native-fabric-twitterkit'
 
-export default class LoginScreen extends React.Component {
-  login() {
+import BaseScreen from './BaseScreen.js'
+
+export default class LoginScreen extends BaseScreen {
+  handleLogin() {
     TwitterKit.login((err, result) => {
       if (err) {
         console.log(err)
@@ -21,7 +22,7 @@ export default class LoginScreen extends React.Component {
         console.log(result)
         AsyncStorage.setItem('@Account:login', 'true')
                .then(() => {
-                 Actions.main()
+                 this.navigate('main', null, true)
                })
       }
     })
@@ -29,7 +30,10 @@ export default class LoginScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Button title={Strings.connect} onPress={this.login} />
+        <Button
+          title={Strings.connect}
+          onPress={this.handleLogin}
+        />
       </View>
     )
   }

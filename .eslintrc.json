@@ -13,35 +13,42 @@
 
   "env": {
     "es6": true,
-    "node": true
+    "node": true,
+    "jest/globals": true
   },
 
   "plugins": [
+    "jest",
     "react",
     "react-native"
   ],
 
-  "global": [
-    "console"
-  ],
-
   "extends": [
     "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:react-native/all"
+    "plugin:react/all"
   ],
 
   "rules": {
     "max-len": [2, 100],
+    "no-console": 0,
     "indent": [2, 2],
     "quotes": [2, "single"],
     "semi": [2, "never"],
-    "no-console": 0,
     "object-curly-spacing": [2, "always"],
+    "react/display-name": 0,
+    "react/forbid-component-props": 0,
+    "react/forbid-prop-types": 0,
+    "react/no-multi-comp": 0,
+    "react/prefer-stateless-function": 0,
+    "react/prop-types": [2, { "skipUndeclared": true }],
+    "react/require-optimization": 0,
+    "react/sort-prop-types": 0,
     "react/jsx-filename-extension": [2, { "extensions": [".js", ".jsx"] }],
+    "react/jsx-first-prop-new-line": [2, "multiline-multiprop"],
     "react/jsx-indent": [2, 2],
     "react/jsx-indent-props": [2, 2],
-    "react/jsx-sort-props": [0],
-    "react/forbid-component-props": [0]
+    "react/jsx-max-props-per-line": [2, { "maximum": 1, "when": "multiline" }],
+    "react/jsx-no-literals": 0,
+    "react/jsx-sort-props": 0
   }
 }

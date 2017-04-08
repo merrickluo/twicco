@@ -9,12 +9,16 @@ import {
  * import LinearGradient from 'react-native-linear-gradient'*/
 
 import BaseScreen from './BaseScreen.js'
+import ToolBar from './ToolBar.js'
 
 export default class HomeScreen extends BaseScreen {
   render() {
     return (
-      <View style={styles.container}>
-        <Text>Home</Text>
+      <View>
+        <ToolBar />
+        <View style={styles.container}>
+          <Text>Home</Text>
+        </View>
       </View>
     )
   }

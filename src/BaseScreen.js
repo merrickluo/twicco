@@ -1,44 +1,25 @@
 import React from 'react'
-import Strings from './res/Strings.js'
-import {
-  StyleSheet,
-  View,
-  Text,
-} from 'react-native'
-
-import LinearGradient from 'react-native-linear-gradient'
-import Colors from './res/Colors.js'
+import { View } from 'react-native'
+import { NavigationActions } from 'react-navigation'
 
 export default class BaseScreen extends React.Component {
-  static renderNavigationBar() {
-    return (
-      <LinearGradient
-        colors={['#383838', '#222222', '#222222']}
-        style={styles.bar}
-      >
-        <Text style={styles.title}>{Strings.appName}</Text>
-      </LinearGradient>
-    )
+  navigate = (routeName, params, replace) => {
+    if (replace) {
+      const action = NavigationActions.reset({
+        index: 0,
+        actions: [
+          NavigationActions.navigate({ routeName: routeName, params: params })
+        ]
+      })
+      this.props.navigation.dispatch(action)
+    } else {
+      this.props.navigation.navigate(routeName, params)
+    }
   }
+
   render() {
     return (
       <View />
     )
   }
 }
-
-const styles = StyleSheet.create({
-  bar: {
-    top: 0,
-    right: 0,
-    left: 0,
-    height: 32,
-    paddingLeft: 8,
-    position: 'absolute',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 14,
-    color: Colors.white,
-  },
-})

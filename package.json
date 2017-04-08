@@ -5,6 +5,7 @@
 	"scripts": {
 		"start": "node node_modules/react-native/local-cli/cli.js start",
 		"test": "jest",
+		"lint": "eslint ./",
 		"android": "react-native run-android"
 	},
 	"dependencies": {
@@ -12,14 +13,15 @@
 		"react-native": "0.43.1",
 		"react-native-fabric-twitterkit": "tkporter/react-native-fabric-twitterkit",
 		"react-native-linear-gradient": "^2.0.0",
-		"react-native-router-flux": "^3.38.0",
-		"react-native-splashscreen": "^1.0.0"
+		"react-native-splashscreen": "^1.0.0",
+		"react-navigation": "https://github.com/react-community/react-navigation.git"
 	},
 	"devDependencies": {
 		"babel-eslint": "^7.2.1",
 		"babel-jest": "19.0.0",
 		"babel-preset-react-native": "1.9.1",
 		"eslint": "^3.18.0",
+		"eslint-plugin-jest": "^19.0.1",
 		"eslint-plugin-react": "^6.10.3",
 		"eslint-plugin-react-native": "^2.3.1",
 		"jest": "19.0.2",

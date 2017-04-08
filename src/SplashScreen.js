@@ -1,21 +1,22 @@
 import React from 'react'
 
 import { View, AsyncStorage } from 'react-native'
-import { Actions, ActionConst } from 'react-native-router-flux'
 
-export default class Splash extends React.Component {
+import BaseScreen from './BaseScreen.js'
+
+export default class Splash extends BaseScreen {
   componentDidMount() {
     AsyncStorage
       .getItem('@Account:login')
       .then((value) => {
         if (value) {
-          Actions.main({ type: ActionConst.RESET })
+          this.navigate('main', null, true)
         } else {
-          Actions.login({ type: ActionConst.RESET })
+          this.navigate('login', null, true)
         }
       })
       .catch(() => {
-        Actions.login()
+        this.navigate('login', null, true)
       })
   }
 
