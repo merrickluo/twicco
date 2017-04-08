@@ -3,22 +3,86 @@ import React from 'react'
 import {
   View,
   StyleSheet,
+  TouchableWithoutFeedback,
 } from 'react-native'
 
 import BaseScreen from './BaseScreen.js'
 import ToolBar from './ToolBar.js'
 
-import Icon from 'react-native-vector-icons/MaterialIcons'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import LinearGradient from 'react-native-linear-gradient'
+
+import HomeScreen from './HomeScreen.js'
+import MentionScreen from './MentionScreen.js'
+import MessageScreen from './MessageScreen.js'
+import ProfileScreen from './ProfileScreen.js'
+
+class TabIcon extends React.Component {
+  render() {
+    const color = this.props.focused ? 'gray' : 'white'
+    return (
+      <View style={styles.tabIcon}>
+        <TouchableWithoutFeedback onPress={this.props.onPress}>
+          <Icon name={this.props.img} size={24} color={color} />
+        </TouchableWithoutFeedback>
+      </View>
+    )
+  }
+}
+
+const screens = [
+  <HomeScreen key="home" />,
+  <MentionScreen key="mention" />,
+  <MessageScreen key="message" />,
+  <ProfileScreen key="profile" />,
+]
 
 export default class MainScreen extends BaseScreen {
+  constructor() {
+    super()
+    this.state = {
+      selectedTab: 0,
+    }
+  }
+
+  handleTabPress = (i) => {
+    console.log(i)
+    this.setState({
+      selectedTab: i,
+    })
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <ToolBar style={styles.toolbar} />
+        <ToolBar style={styles.toolBar} />
         <View style={styles.content}>
-          <View style={styles.tabBar}>
-            <Icon name="home" size={30} />
-          </View>
+          { screens[this.state.selectedTab] }
+          <LinearGradient
+            colors={['transparent', 'transparent', '#000000']}
+            style={styles.tabBar}
+          >
+            <TabIcon
+              img="home"
+              focused={this.state.selectedTab === 0}
+              onPress={() => this.handleTabPress(0)}
+            />
+            <TabIcon
+              img="at"
+              focused={this.state.selectedTab === 1}
+              onPress={() => this.handleTabPress(1)}
+            />
+            <TabIcon
+              img="email"
+              focused={this.state.selectedTab === 2}
+              onPress={() => this.handleTabPress(2)}
+            />
+            <TabIcon
+              img="account"
+              focused={this.state.selectedTab === 3}
+              onPress={() => this.handleTabPress(3)}
+            />
+          </LinearGradient>
         </View>
       </View>
     )
@@ -29,17 +93,29 @@ export default class MainScreen extends BaseScreen {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
     flexDirection: 'column',
   },
   toolbar: {
-    height: 32,
+    flex: 1,
+    zIndex: 999,
   },
   content: {
-    backgroundColor: '#222'
+    zIndex: 998,
+    flex: 1,
+    backgroundColor: '#222222'
   },
   tabBar: {
-    height: 48,
-    alignSelf: 'flex-end',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    position: 'absolute',
+    height: 36,
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  tabIcon: {
+    flex: 1,
+    alignItems: 'center',
   },
 })

@@ -9,14 +9,12 @@ import {
  * import LinearGradient from 'react-native-linear-gradient'*/
 
 import BaseScreen from './BaseScreen.js'
-import ToolBar from './ToolBar.js'
 
 export default class HomeScreen extends BaseScreen {
   render() {
     return (
-      <View style={{ backgroundColor: '#111' }}>
-        <ToolBar />
-        <View style={styles.container}>
+      <View style={styles.container}>
+        <View style={styles.content}>
           <Text>Home</Text>
         </View>
       </View>
@@ -26,8 +24,10 @@ export default class HomeScreen extends BaseScreen {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 32,
-    backgroundColor: '#111',
-    height: '100%',
-  }
+    flex: 1,
+    flexDirection: 'column',
+  },
+  content: {
+    flex: 1,
+  },
 })

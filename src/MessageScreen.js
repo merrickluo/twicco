@@ -9,13 +9,11 @@ import {
  * import LinearGradient from 'react-native-linear-gradient'*/
 
 import BaseScreen from './BaseScreen.js'
-import ToolBar from './ToolBar.js'
 
 export default class MessageScreen extends BaseScreen {
   render() {
     return (
       <View>
-        <ToolBar />
         <View style={styles.container}>
           <Text>Message</Text>
         </View>
@@ -26,6 +24,6 @@ export default class MessageScreen extends BaseScreen {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 32,
+    marginTop: 0,
   }
 })
