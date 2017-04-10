@@ -12,6 +12,8 @@ import TwitterKit from 'react-native-fabric-twitterkit'
 
 import BaseScreen from './BaseScreen.js'
 
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+
 export default class LoginScreen extends BaseScreen {
   handleLogin = () => {
     TwitterKit.login((err, result) => {
@@ -30,10 +32,9 @@ export default class LoginScreen extends BaseScreen {
   render() {
     return (
       <View style={styles.container}>
-        <Button
-          title={Strings.connect}
-          onPress={this.handleLogin}
-        />
+        <Icon.Button name="twitter" onPress={this.handleLogin}>
+          {Strings.connect}
+        </Icon.Button>
       </View>
     )
   }
