@@ -46,10 +46,6 @@ const persistConfig = {
   blacklist: ['nav'],
   storage: AsyncStorage,
 }
-persistStore(store, persistConfig, (storedState) => {
-  console.log(storedState)
-  // eslint-disable-next-line react/no-set-state
-})
 
 class App extends React.Component {
 
