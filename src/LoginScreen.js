@@ -3,29 +3,24 @@ import Strings from './res/Strings.js'
 import {
   StyleSheet,
   View,
-  Button,
-  Alert,
-  AsyncStorage,
 } from 'react-native'
 
 import TwitterKit from 'react-native-fabric-twitterkit'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+
+import { connect } from 'react-redux'
 
 import BaseScreen from './BaseScreen.js'
 
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-
-export default class LoginScreen extends BaseScreen {
+class LoginScreen extends BaseScreen {
   handleLogin = () => {
+    let { dispatch } = this.props
     TwitterKit.login((err, result) => {
       if (err) {
-        console.log(err)
-        Alert.alert('login failed')
+        dispatch({ type: 'LOGIN_FAILED', error: err })
       } else {
-        console.log(result)
-        AsyncStorage.setItem('@Account:login', 'true')
-               .then(() => {
-                 this.navigate('main', null, true)
-               })
+        dispatch({ type: 'LOGIN_SUCCESS', account: result })
+        this.navigate('main', null, true)
       }
     })
   }
@@ -47,3 +42,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 })
+
+export default connect()(LoginScreen)

@@ -38,18 +38,8 @@ const screens = [
 ]
 
 export default class MainScreen extends BaseScreen {
-  constructor() {
-    super()
-    this.state = {
-      selectedTab: 0,
-    }
-  }
-
   handleTabPress = (i) => {
     console.log(i)
-    this.setState({
-      selectedTab: i,
-    })
   }
 
   render() {
@@ -57,29 +47,29 @@ export default class MainScreen extends BaseScreen {
       <View style={styles.container}>
         <ToolBar style={styles.toolBar} />
         <View style={styles.content}>
-          { screens[this.state.selectedTab] }
+          { screens[this.props.selectedTab] }
           <LinearGradient
             colors={['transparent', 'transparent', '#000000']}
             style={styles.tabBar}
           >
             <TabIcon
               img="home"
-              focused={this.state.selectedTab === 0}
+              focused={this.props.selectedTab === 0}
               onPress={() => this.handleTabPress(0)}
             />
             <TabIcon
               img="at"
-              focused={this.state.selectedTab === 1}
+              focused={this.props.selectedTab === 1}
               onPress={() => this.handleTabPress(1)}
             />
             <TabIcon
               img="email"
-              focused={this.state.selectedTab === 2}
+              focused={this.props.selectedTab === 2}
               onPress={() => this.handleTabPress(2)}
             />
             <TabIcon
               img="account"
-              focused={this.state.selectedTab === 3}
+              focused={this.props.selectedTab === 3}
               onPress={() => this.handleTabPress(3)}
             />
           </LinearGradient>
