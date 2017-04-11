@@ -2,14 +2,12 @@ import React from 'react'
 import {
   StyleSheet,
   View,
-  Text,
 } from 'react-native'
 
-/* import TwitterKit from 'react-native-fabric-twitterkit'
- * import LinearGradient from 'react-native-linear-gradient'*/
+import { connect } from 'react-redux'
 
 import BaseScreen from './BaseScreen.js'
-import { connect } from 'react-redux'
+import TweetList from './components/TweetList.js'
 
 @connect(state => {
   return {
@@ -18,10 +16,19 @@ import { connect } from 'react-redux'
   }
 })
 export default class HomeScreen extends BaseScreen {
+  constructor() {
+    super()
+    this.state = {
+      tweets: [],
+    }
+  }
   componentDidMount() {
     this.props.api.rest.get('statuses/home_timeline')
         .then(result => {
-          console.log(result)
+          console.log(result[0])
+          this.setState({
+            tweets: result,
+          })
         })
         .catch(e => {
           console.log(e)
@@ -31,9 +38,7 @@ export default class HomeScreen extends BaseScreen {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.content}>
-          <Text>Home</Text>
-        </View>
+        <TweetList tweets={this.state.tweets} />
       </View>
     )
   }
