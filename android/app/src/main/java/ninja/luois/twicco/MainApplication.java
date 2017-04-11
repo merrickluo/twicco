@@ -3,6 +3,7 @@ package ninja.luois.twicco;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import ga.piroro.rnt.RNTPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -34,6 +35,7 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
           FabricTwitterKitPackage.getInstance(),
           new MainReactPackage(),
+            new RNTPackage(),
             new VectorIconsPackage(),
           new LinearGradientPackage()
       );
