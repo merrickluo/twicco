@@ -16,6 +16,18 @@ import { persistStore, autoRehydrate } from 'redux-persist'
 import SplashScreen from './SplashScreen.js'
 import Navigator, { navReducer } from './Navigator.js'
 
+const api = (state, action) => {
+  if (!state) return {}
+  switch (action.type) {
+    case 'api.twitter.init':
+      return Object.assign({}, state, {
+        twitter: action.client
+      })
+    default:
+      return state
+  }
+}
+
 const root = (state, action) => {
   if (!state) {
     return {}
@@ -33,6 +45,7 @@ const root = (state, action) => {
 
 const store = createStore(
   combineReducers({
+    api,
     app: root,
     nav: navReducer,
   }),
@@ -43,7 +56,7 @@ const store = createStore(
 )
 
 const persistConfig = {
-  blacklist: ['nav'],
+  blacklist: ['nav', 'api'],
   storage: AsyncStorage,
 }
 

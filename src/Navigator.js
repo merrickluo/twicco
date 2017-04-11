@@ -26,27 +26,28 @@ export const navReducer = (state, action) => {
 
 @connect(state => {
   // FIXME this is kindof hack
+  let nav = state.nav
   if (state.nav.index == 0 && state.nav.routes[0].key === 'Init') {
-    if (state.app.account) {
-      return { nav: { index: 0, routes: [ { routeName: 'main', key: 'Init' } ] } }
-    } else {
-      return { nav: { index: 0, routes: [ { routeName: 'login', key: 'Init' } ] } }
-    }
+    const firstRoute = state.app.account ? 'main' : 'login'
+    nav = { index: 0, routes: [ { routeName: firstRoute, key: 'Init' } ] }
   }
   return {
-    nav: state.nav,
+    nav: nav,
+    account: state.app.account,
   }
 })
-
 export default class Navigator extends React.Component {
+  componentWillMount() {
+    this.navigation = addNavigationHelpers({
+      dispatch: this.props.dispatch,
+      state: this.props.nav,
+    })
+  }
+
   render() {
     return (
-      <AppNavigator navigation={
-        addNavigationHelpers({
-          dispatch: this.props.dispatch,
-          state: this.props.nav,
-        })
-      }
+      <AppNavigator
+        navigation={this.navigation}
       />
     )
   }
