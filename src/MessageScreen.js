@@ -5,9 +5,6 @@ import {
   Text,
 } from 'react-native'
 
-/* import TwitterKit from 'react-native-fabric-twitterkit'
- * import LinearGradient from 'react-native-linear-gradient'*/
-
 import BaseScreen from './BaseScreen.js'
 
 export default class MessageScreen extends BaseScreen {

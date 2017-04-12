@@ -95,8 +95,6 @@ android {
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
-        resValue "string", "twitter_key", twitter_key
-        resValue "string", "twitter_secret", twitter_secret
     }
     splits {
         abi {
@@ -132,7 +130,6 @@ dependencies {
     compile project(':react-native-vector-icons')
     compile project(':react-native-linear-gradient')
     compile fileTree(dir: "libs", include: ["*.jar"])
-    compile project(':react-native-fabric-twitterkit')
     compile "com.android.support:appcompat-v7:23.0.1"
     compile "com.facebook.react:react-native:+"  // From node_modules
 }

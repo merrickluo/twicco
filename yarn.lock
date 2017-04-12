@@ -3386,10 +3386,6 @@ react-native-drawer-layout@1.2.0:
   dependencies:
     react-native-dismiss-keyboard "1.0.0"
 
-react-native-fabric-twitterkit@tkporter/react-native-fabric-twitterkit:
-  version "0.1.1"
-  resolved "https://codeload.github.com/tkporter/react-native-fabric-twitterkit/tar.gz/c1d57b62b96dcbbc00ab4dee92ce874555f8ff9e"
-
 react-native-linear-gradient@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/react-native-linear-gradient/-/react-native-linear-gradient-2.0.0.tgz#7442c00e1fcd9fca329119dcbaf744d12bcd1b5a"
