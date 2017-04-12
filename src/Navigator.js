@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 
 import LoginScreen from './LoginScreen.js'
 import MainScreen from './MainScreen.js'
+import ComposeScreen from './ComposeScreen.js'
 
 const routes = {
   login: {
@@ -12,6 +13,9 @@ const routes = {
   },
   main: {
     screen: MainScreen,
+  },
+  compose: {
+    screen: ComposeScreen,
   }
 }
 
@@ -28,7 +32,8 @@ export const navReducer = (state, action) => {
   // FIXME this is kindof hack
   let nav = state.nav
   if (state.nav.index == 0 && state.nav.routes[0].key === 'Init') {
-    const firstRoute = state.app.account ? 'main' : 'login'
+    /* const firstRoute = state.app.account ? 'main' : 'login'*/
+    const firstRoute = 'compose'
     nav = { index: 0, routes: [ { routeName: firstRoute, key: 'Init' } ] }
   }
   return {
