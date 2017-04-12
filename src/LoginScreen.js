@@ -3,12 +3,12 @@ import Strings from './res/Strings.js'
 import {
   StyleSheet,
   View,
-  Linking,
 } from 'react-native'
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { connect } from 'react-redux'
 import { auth } from 'react-native-twitter'
+import Config from 'react-native-config'
 
 import BaseScreen from './BaseScreen.js'
 
@@ -16,8 +16,8 @@ class LoginScreen extends BaseScreen {
   handleLogin = () => {
     let { dispatch } = this.props
     const tokens = {
-      consumerKey: '',
-      consumerSecret: '',
+      consumerKey: Config.TWITTER_KEY,
+      consumerSecret: Config.TWITTER_SECRET,
     }
     auth(tokens, 'https://luois.ninja/twicco')
       .then(r => {

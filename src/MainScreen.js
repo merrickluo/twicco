@@ -19,6 +19,7 @@ import MessageScreen from './MessageScreen.js'
 import ProfileScreen from './ProfileScreen.js'
 
 import { connect } from 'react-redux'
+import Config from 'react-native-config'
 
 class TabIcon extends React.Component {
   render() {
@@ -57,12 +58,14 @@ const mapDispatchToProps = (dispatch) => ({
 export default class MainScreen extends BaseScreen {
   componentWillMount() {
     const client = twitter({
-      consumerKey: '',
-      consumerSecret: '',
+      consumerKey: Config.TWITTER_KEY,
+      consumerSecret: Config.TWITTER_SECRET,
       accessToken: this.props.account.accessToken,
       accessTokenSecret: this.props.account.accessTokenSecret,
     })
     this.props.initTwitter(client)
+    console.log(Config)
+    console.log(Config.TWITTER_KEY)
   }
 
   handleTabPress = (i) => {
