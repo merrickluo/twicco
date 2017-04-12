@@ -59,8 +59,8 @@ export default class MainScreen extends BaseScreen {
     const client = twitter({
       consumerKey: '',
       consumerSecret: '',
-      accessToken: this.props.account.authToken,
-      accessTokenSecret: this.props.account.authTokenSecret,
+      accessToken: this.props.account.accessToken,
+      accessTokenSecret: this.props.account.accessTokenSecret,
     })
     this.props.initTwitter(client)
   }

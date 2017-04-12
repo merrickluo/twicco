@@ -3,27 +3,32 @@ import Strings from './res/Strings.js'
 import {
   StyleSheet,
   View,
+  Linking,
 } from 'react-native'
 
-import TwitterKit from 'react-native-fabric-twitterkit'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-
 import { connect } from 'react-redux'
+import { auth } from 'react-native-twitter'
 
 import BaseScreen from './BaseScreen.js'
 
 class LoginScreen extends BaseScreen {
   handleLogin = () => {
     let { dispatch } = this.props
-    TwitterKit.login((err, result) => {
-      if (err) {
-        dispatch({ type: 'LOGIN_FAILED', error: err })
-      } else {
-        dispatch({ type: 'LOGIN_SUCCESS', account: result })
+    const tokens = {
+      consumerKey: '',
+      consumerSecret: '',
+    }
+    auth(tokens, 'https://luois.ninja/twicco')
+      .then(r => {
+        dispatch({ type: 'LOGIN_SUCCESS', account: r })
         this.navigate('main', null, true)
-      }
-    })
+      })
+      .catch(e => {
+        dispatch({ type: 'LOGIN_FAILED', error: e })
+      })
   }
+
   render() {
     return (
       <View style={styles.container}>
