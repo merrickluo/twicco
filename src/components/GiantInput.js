@@ -15,6 +15,7 @@ export default class GiantInput extends React.Component {
           multiline
           textAlignVertical="top"
           underlineColorAndroid="transparent"
+          value={this.props.text}
           onChangeText={this.props.onChangeText}
         />
         <Text style={styles.counter}>{this.props.count}</Text>
@@ -30,6 +31,8 @@ const styles = {
     flexDirection: 'row',
   },
   input: {
+    fontSize: 16,
+    padding: 10,
     borderWidth: 1,
     backgroundColor: 'white',
     flex: 1,

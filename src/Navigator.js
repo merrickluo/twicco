@@ -2,6 +2,8 @@ import React from 'react'
 
 import { StackNavigator, addNavigationHelpers } from 'react-navigation'
 import { connect } from 'react-redux'
+import twitter from 'react-native-twitter'
+import Config from 'react-native-config'
 
 import LoginScreen from './LoginScreen.js'
 import MainScreen from './MainScreen.js'
@@ -28,7 +30,7 @@ export const navReducer = (state, action) => {
   return (newState ? newState : state)
 }
 
-@connect(state => {
+const mapStateToProps = (state) => {
   // FIXME this is kindof hack
   let nav = state.nav
   if (state.nav.index == 0 && state.nav.routes[0].key === 'Init') {
@@ -40,9 +42,25 @@ export const navReducer = (state, action) => {
     nav: nav,
     account: state.account,
   }
+}
+
+const mapDispatchToProps = (dispatch) => ({
+  initTwitter: (client) => {
+    dispatch({ type: 'api.twitter.init', client })
+  },
+  dispatch: dispatch,
 })
+
+@connect(mapStateToProps, mapDispatchToProps)
 export default class Navigator extends React.Component {
   componentWillMount() {
+    const client = twitter({
+      consumerKey: Config.TWITTER_KEY,
+      consumerSecret: Config.TWITTER_SECRET,
+      accessToken: this.props.account.accessToken,
+      accessTokenSecret: this.props.account.accessTokenSecret,
+    })
+    this.props.initTwitter(client)
     this.navigation = addNavigationHelpers({
       dispatch: this.props.dispatch,
       state: this.props.nav,
