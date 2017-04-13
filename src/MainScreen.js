@@ -44,7 +44,7 @@ const screens = [
 const mapStateToProps = (state) => {
   return {
     selectedTab: 0,
-    account: state.app.account,
+    account: state.account,
   }
 }
 
