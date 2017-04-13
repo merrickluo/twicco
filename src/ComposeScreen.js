@@ -5,18 +5,32 @@ import {
   TouchableOpacity,
 } from 'react-native'
 
+import { connect } from 'react-redux'
+import { actions } from './reducers/compose.js'
+
 import ToolBar from './ToolBar.js'
 import GiantInput from './components/GiantInput.js'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import ImageButton from './components/ImageButton.js'
 
+const mapStateToProps = (state) => {
+  return state.compose
+}
+const mapDispatchToProps = (dispatch) => ({
+  onChangeText: (text) => {dispatch({ type: actions.changeText, text: text })}
+})
+
+@connect(mapStateToProps, mapDispatchToProps)
 export default class ComposeScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
         <ToolBar />
         <View style={styles.inputContainer}>
-          <GiantInput />
+          <GiantInput
+            onChangeText={this.props.onChangeText}
+            count={this.props.count}
+          />
         </View>
         <View style={styles.buttonsContainer}>
           <View style={styles.leftButtons}>

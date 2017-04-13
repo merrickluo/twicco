@@ -15,8 +15,9 @@ export default class GiantInput extends React.Component {
           multiline
           textAlignVertical="top"
           underlineColorAndroid="transparent"
+          onChangeText={this.props.onChangeText}
         />
-        <Text style={styles.counter}>140</Text>
+        <Text style={styles.counter}>{this.props.count}</Text>
       </View>
     )
   }
