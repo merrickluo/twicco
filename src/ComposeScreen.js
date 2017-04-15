@@ -43,6 +43,9 @@ const mapDispatchToProps = (dispatch) => ({
   handlePreviewClose: () => {
     dispatch({ type: actions.previewClear })
   },
+  back: () => {
+    dispatch({ type: 'Navigation/BACK' })
+  },
   dispatch,
 })
 
@@ -58,25 +61,31 @@ export default class ComposeScreen extends React.Component {
     quality: 0.5,
   }
 
-  handleTweetClick = async () => {
-    const { api, draft } = this.props
-    console.log(draft)
-    if (!draft.valid) return
-    let mediaIds = []
-    if (draft.images.length) {
-      mediaIds = await Promise.all(draft.images.map((imageUri) => {
+  uploadImages = async (images) => {
+    const { api } = this.props
+    if (images.length) {
+      return await Promise.all(images.map((imageUri) => {
         return api.post('media/upload', {
           media: { uri: imageUri }
         })
       })).then(r => r.map(m => m.media_id_string))
     }
+    return []
+  }
+
+  handleTweetClick = async () => {
+    const { api, draft } = this.props
+    console.log(draft)
+    if (!draft.valid) return
     try {
+      let mediaIds = await this.uploadImages(draft.images)
       const resp = await api.post('statuses/update', {
         status: draft.text,
         media_ids: mediaIds,
       })
       console.log(resp)
       this.props.clear()
+      this.props.back()
     } catch (e) {
       console.log(e)
     }
