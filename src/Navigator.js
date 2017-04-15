@@ -18,7 +18,7 @@ const routes = {
   },
   compose: {
     screen: ComposeScreen,
-  }
+  },
 }
 
 const AppNavigator = StackNavigator(routes, {
@@ -61,16 +61,15 @@ export default class Navigator extends React.Component {
       accessTokenSecret: this.props.account.accessTokenSecret,
     })
     this.props.initTwitter(client)
-    this.navigation = addNavigationHelpers({
-      dispatch: this.props.dispatch,
-      state: this.props.nav,
-    })
   }
 
   render() {
     return (
       <AppNavigator
-        navigation={this.navigation}
+        navigation={addNavigationHelpers({
+          dispatch: this.props.dispatch,
+          state: this.props.nav,
+        })}
       />
     )
   }
