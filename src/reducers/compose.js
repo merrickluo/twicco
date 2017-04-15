@@ -4,6 +4,7 @@ const initialState = {
   valid: false,
   previewImageUri: null,
   images: [],
+  sending: false,
 }
 
 export const actions = {
@@ -13,6 +14,7 @@ export const actions = {
   removeImage: 'compose.removeImage',
   previewImage: 'compose.previewImage',
   previewClear: 'compose.preivewClear',
+  sending: 'compose.sending',
 }
 
 export default (state, action) => {
@@ -26,6 +28,12 @@ export default (state, action) => {
       text: action.text,
       count: counter,
       valid: valid,
+    }
+  }
+  case actions.sending: {
+    return {
+      ...state,
+      sending: true,
     }
   }
   case actions.pickImage:

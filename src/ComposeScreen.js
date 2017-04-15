@@ -17,6 +17,7 @@ import GiantInput from './components/GiantInput.js'
 import ImageButton from './components/ImageButton.js'
 import ComposeThumbnail from './components/ComposeThumbnail.js'
 import ImagePreviewOverlay from './components/ImagePreviewOverlay.js'
+import LoadingOverlay from './components/LoadingOverlay.js'
 
 const mapStateToProps = (state) => {
   return {
@@ -45,6 +46,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   back: () => {
     dispatch({ type: 'Navigation/BACK' })
+  },
+  startSending: () => {
+    dispatch({ type: actions.sending })
   },
   dispatch,
 })
@@ -77,6 +81,7 @@ export default class ComposeScreen extends React.Component {
     const { api, draft } = this.props
     console.log(draft)
     if (!draft.valid) return
+    this.props.startSending()
     try {
       let mediaIds = await this.uploadImages(draft.images)
       const resp = await api.post('statuses/update', {
@@ -95,7 +100,6 @@ export default class ComposeScreen extends React.Component {
     if (resp.didCancel || resp.error) {
       return
     }
-    console.log(resp)
     this.props.pickedImage(resp.uri)
   }
 
@@ -128,7 +132,6 @@ export default class ComposeScreen extends React.Component {
   }
 
   render() {
-    console.log(this.props.draft)
     return (
       <View style={styles.container}>
         <ToolBar />
@@ -159,6 +162,7 @@ export default class ComposeScreen extends React.Component {
           uri={this.props.draft.previewImageUri}
           onClose={this.props.handlePreviewClose}
         />
+        <LoadingOverlay loading={this.props.draft.sending} />
       </View>
     )
   }
