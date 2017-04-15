@@ -25,19 +25,11 @@ const mapStateToProps = (state) => {
   }
 }
 const mapDispatchToProps = (dispatch) => ({
-  onChangeText: (text) => {dispatch({ type: actions.changeText, text: text })},
-  sendTweet: async (api, draft) => {
-    console.log(draft)
-    if (!draft.valid) return
-    try {
-      const resp = await api.post('statuses/update', {
-        status: draft.text,
-      })
-      console.log(resp)
-      dispatch({ type: actions.clear })
-    } catch (e) {
-      console.log(e)
-    }
+  onChangeText: (text) => {
+    dispatch({ type: actions.changeText, text: text })
+  },
+  clear: () => {
+    dispatch({ type: actions.clear })
   },
   pickedImage: (imageUri) => {
     dispatch({ type: actions.pickImage, imageUri: imageUri })
@@ -57,7 +49,7 @@ const mapDispatchToProps = (dispatch) => ({
 @connect(mapStateToProps, mapDispatchToProps)
 export default class ComposeScreen extends React.Component {
   componentWillMount() {
-    //this.props.dispatch({ type: actions.clear })
+    //this.props.clear()
   }
 
   pickerOptions = {
@@ -68,7 +60,26 @@ export default class ComposeScreen extends React.Component {
 
   handleTweetClick = async () => {
     const { api, draft } = this.props
-    await this.props.sendTweet(api, draft)
+    console.log(draft)
+    if (!draft.valid) return
+    let mediaIds = []
+    if (draft.images.length) {
+      mediaIds = await Promise.all(draft.images.map((imageUri) => {
+        return api.post('media/upload', {
+          media: { uri: imageUri }
+        })
+      })).then(r => r.map(m => m.media_id_string))
+    }
+    try {
+      const resp = await api.post('statuses/update', {
+        status: draft.text,
+        media_ids: mediaIds,
+      })
+      console.log(resp)
+      this.props.clear()
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   imagePickCallback = (resp) => {
