@@ -3,7 +3,7 @@ import {
   View,
   Text,
   TouchableOpacity,
-  Image,
+  Alert,
 } from 'react-native'
 
 import { connect } from 'react-redux'
@@ -42,6 +42,9 @@ const mapDispatchToProps = (dispatch) => ({
   pickedImage: (imageUri) => {
     dispatch({ type: actions.pickImage, imageUri: imageUri })
   },
+  handleRemoveImage: (_, index) => {
+    dispatch({ type: actions.removeImage, index: index })
+  },
   handlePreviewImage: (imageUri) => {
     dispatch({ type: actions.previewImage, imageUri: imageUri })
   },
@@ -54,7 +57,7 @@ const mapDispatchToProps = (dispatch) => ({
 @connect(mapStateToProps, mapDispatchToProps)
 export default class ComposeScreen extends React.Component {
   componentWillMount() {
-    this.props.dispatch({ type: actions.clear })
+    //this.props.dispatch({ type: actions.clear })
   }
 
   pickerOptions = {
@@ -80,14 +83,24 @@ export default class ComposeScreen extends React.Component {
     ImagePicker.launchCamera(this.pickerOptions, this.imagePickCallback)
   }
 
-  handleImagePick = async () => {
+  handleImagePick = () => {
     ImagePicker.launchImageLibrary(this.pickerOptions, this.imagePickCallback)
+  }
+
+  handleThumbnailLongPress = (uri, index) => {
+    Alert.alert(
+      '',
+      'Remove image?',
+      [{ text: 'Remove', onPress: () => this.props.handleRemoveImage(uri, index) },
+       { text: 'Cancel' }])
   }
 
   renderThumbnail = (imageUri, index) => {
     return (
       <ComposeThumbnail
         onPress={this.props.handlePreviewImage}
+        onLongPress={this.handleThumbnailLongPress}
+        index={index}
         uri={imageUri}
         key={index}
       />

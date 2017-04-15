@@ -10,6 +10,7 @@ export const actions = {
   changeText: 'compose.changeText',
   clear: 'compose.clear',
   pickImage: 'compose.pickImage',
+  removeImage: 'compose.removeImage',
   previewImage: 'compose.previewImage',
   previewClear: 'compose.preivewClear',
 }
@@ -33,6 +34,14 @@ export default (state, action) => {
       images: [
         ...state.images,
         action.imageUri
+      ]
+    }
+  case actions.removeImage:
+    return {
+      ...state,
+      images: [
+        ...state.images.slice(0, action.index),
+        ...state.images.slice(action.index+1, state.images.length),
       ]
     }
   case actions.previewImage:
