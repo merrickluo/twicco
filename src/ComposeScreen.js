@@ -3,15 +3,20 @@ import {
   View,
   Text,
   TouchableOpacity,
+  Image,
 } from 'react-native'
 
 import { connect } from 'react-redux'
 import { actions } from './reducers/compose.js'
 
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import ImagePicker from 'react-native-image-picker'
+
 import ToolBar from './ToolBar.js'
 import GiantInput from './components/GiantInput.js'
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import ImageButton from './components/ImageButton.js'
+import ComposeThumbnail from './components/ComposeThumbnail.js'
+import ImagePreviewOverlay from './components/ImagePreviewOverlay.js'
 
 const mapStateToProps = (state) => {
   return {
@@ -33,18 +38,64 @@ const mapDispatchToProps = (dispatch) => ({
     } catch (e) {
       console.log(e)
     }
-  }
+  },
+  pickedImage: (imageUri) => {
+    dispatch({ type: actions.pickImage, imageUri: imageUri })
+  },
+  handlePreviewImage: (imageUri) => {
+    dispatch({ type: actions.previewImage, imageUri: imageUri })
+  },
+  handlePreviewClose: () => {
+    dispatch({ type: actions.previewClear })
+  },
+  dispatch,
 })
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class ComposeScreen extends React.Component {
+  componentWillMount() {
+    this.props.dispatch({ type: actions.clear })
+  }
+
+  pickerOptions = {
+    noData: true,
+    mediaType: 'photo',
+    quality: 0.5,
+  }
 
   handleTweetClick = async () => {
     const { api, draft } = this.props
     await this.props.sendTweet(api, draft)
   }
 
+  imagePickCallback = (resp) => {
+    if (resp.didCancel || resp.error) {
+      return
+    }
+    console.log(resp)
+    this.props.pickedImage(resp.uri)
+  }
+
+  handleCamera = () => {
+    ImagePicker.launchCamera(this.pickerOptions, this.imagePickCallback)
+  }
+
+  handleImagePick = async () => {
+    ImagePicker.launchImageLibrary(this.pickerOptions, this.imagePickCallback)
+  }
+
+  renderThumbnail = (imageUri, index) => {
+    return (
+      <ComposeThumbnail
+        onPress={this.props.handlePreviewImage}
+        uri={imageUri}
+        key={index}
+      />
+    )
+  }
+
   render() {
+    console.log(this.props.draft)
     return (
       <View style={styles.container}>
         <ToolBar />
@@ -57,8 +108,10 @@ export default class ComposeScreen extends React.Component {
         </View>
         <View style={styles.buttonsContainer}>
           <View style={styles.leftButtons}>
-            <ImageButton name="folder-multiple-image" />
-            <ImageButton name="map-marker" />
+            <ImageButton name="camera" onPress={this.handleCamera} />
+            <ImageButton name="folder-multiple-image" onPress={this.handleImagePick} />
+            {/* <ImageButton name="map-marker" /> */}
+            {this.props.draft.images.map(this.renderThumbnail)}
           </View>
           <TouchableOpacity
             style={styles.tweetButton}
@@ -69,6 +122,10 @@ export default class ComposeScreen extends React.Component {
             <Text style={styles.buttonText}>Tweet</Text>
           </TouchableOpacity>
         </View>
+        <ImagePreviewOverlay
+          uri={this.props.draft.previewImageUri}
+          onClose={this.props.handlePreviewClose}
+        />
       </View>
     )
   }
