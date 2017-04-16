@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { StackNavigator, addNavigationHelpers } from 'react-navigation'
+import { BackAndroid } from 'react-native'
 import { connect } from 'react-redux'
 import twitter from 'react-native-twitter'
 import Config from 'react-native-config'
@@ -51,6 +52,10 @@ const mapDispatchToProps = (dispatch) => ({
   dispatch: dispatch,
 })
 
+const shouldCloseApp = (nav) => {
+  return nav.index == 0
+}
+
 @connect(mapStateToProps, mapDispatchToProps)
 export default class Navigator extends React.Component {
   componentWillMount() {
@@ -61,6 +66,19 @@ export default class Navigator extends React.Component {
       accessTokenSecret: this.props.account.accessTokenSecret,
     })
     this.props.initTwitter(client)
+  }
+
+  componentDidMount() {
+    BackAndroid.addEventListener('backPress', () => {
+      const { dispatch, nav } = this.props
+      if (shouldCloseApp(nav)) return false
+      dispatch({ type: 'Navigation/BACK' })
+      return true
+    })
+  }
+
+  componentWillUnmount() {
+    BackAndroid.removeEventListener('backPress')
   }
 
   render() {
