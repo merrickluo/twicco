@@ -3393,6 +3393,10 @@ react-devtools-core@^2.0.8:
     cross-env "^3.1.4"
     ws "^2.0.3"
 
+react-native-action-button@^2.6.8:
+  version "2.6.8"
+  resolved "https://registry.yarnpkg.com/react-native-action-button/-/react-native-action-button-2.6.8.tgz#9da83f646ae664ebf0a4c9652c58c73b4db2997d"
+
 react-native-config@^0.3.1:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/react-native-config/-/react-native-config-0.3.1.tgz#981d98eee2c4e467397cd9306f5b6958c501c6e8"

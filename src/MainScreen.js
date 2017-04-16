@@ -11,6 +11,8 @@ import ToolBar from './ToolBar.js'
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import LinearGradient from 'react-native-linear-gradient'
+import ActionButton from 'react-native-action-button'
+import { NavigationActions } from 'react-navigation'
 
 import HomeScreen from './HomeScreen.js'
 import MentionScreen from './MentionScreen.js'
@@ -46,11 +48,23 @@ const mapStateToProps = (state) => {
   }
 }
 
-@connect(mapStateToProps)
+const mapDispatchToProps = (dispatch) => ({
+  dispatch,
+  toCompose: () => {
+    const action = NavigationActions.navigate({ routeName: 'compose' })
+    dispatch(action)
+  },
+})
+
+@connect(mapStateToProps, mapDispatchToProps)
 export default class MainScreen extends BaseScreen {
 
   handleTabPress = (i) => {
     console.log(i)
+  }
+
+  handleComposeClick = () => {
+    this.props.toCompose()
   }
 
   render() {
@@ -59,6 +73,13 @@ export default class MainScreen extends BaseScreen {
         <ToolBar style={styles.toolBar} />
         <View style={styles.content}>
           { screens[this.props.selectedTab] }
+          <ActionButton
+            buttonColor="rgba(255,255,255,0.8)"
+            onPress={this.handleComposeClick}
+            useNativeFeedback={false}
+            offsetY={56}
+            icon={<Icon name="comment-processing-outline" size={30} color="black" />}
+          />
           <LinearGradient
             colors={['transparent', 'transparent', '#000000']}
             style={styles.tabBar}
