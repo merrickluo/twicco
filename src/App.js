@@ -15,38 +15,11 @@ import { persistStore, autoRehydrate } from 'redux-persist'
 
 import SplashScreen from './SplashScreen.js'
 import Navigator, { navReducer } from './Navigator.js'
-
-const api = (state, action) => {
-  if (!state) return {}
-  switch (action.type) {
-    case 'api.twitter.init':
-      return Object.assign({}, state, {
-        twitter: action.client
-      })
-    default:
-      return state
-  }
-}
-
-const root = (state, action) => {
-  if (!state) {
-    return {}
-  }
-  console.log(action)
-  switch(action.type) {
-  case 'LOGIN_SUCCESS':
-    return Object.assign({}, state, {
-      account: action.account,
-    })
-  default:
-    return state
-  }
-}
+import reducers from './reducers'
 
 const store = createStore(
   combineReducers({
-    api,
-    app: root,
+    ...reducers,
     nav: navReducer,
   }),
   undefined,

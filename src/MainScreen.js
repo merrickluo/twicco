@@ -1,5 +1,4 @@
 import React from 'react'
-import twitter from 'react-native-twitter'
 
 import {
   View,
@@ -12,6 +11,8 @@ import ToolBar from './ToolBar.js'
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import LinearGradient from 'react-native-linear-gradient'
+import ActionButton from 'react-native-action-button'
+import { NavigationActions } from 'react-navigation'
 
 import HomeScreen from './HomeScreen.js'
 import MentionScreen from './MentionScreen.js'
@@ -19,7 +20,6 @@ import MessageScreen from './MessageScreen.js'
 import ProfileScreen from './ProfileScreen.js'
 
 import { connect } from 'react-redux'
-import Config from 'react-native-config'
 
 class TabIcon extends React.Component {
   render() {
@@ -44,32 +44,27 @@ const screens = [
 const mapStateToProps = (state) => {
   return {
     selectedTab: 0,
-    account: state.app.account,
+    account: state.account,
   }
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  initTwitter: (client) => {
-    dispatch({ type: 'api.twitter.init', client })
-  }
+  dispatch,
+  toCompose: () => {
+    const action = NavigationActions.navigate({ routeName: 'compose' })
+    dispatch(action)
+  },
 })
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class MainScreen extends BaseScreen {
-  componentWillMount() {
-    const client = twitter({
-      consumerKey: Config.TWITTER_KEY,
-      consumerSecret: Config.TWITTER_SECRET,
-      accessToken: this.props.account.accessToken,
-      accessTokenSecret: this.props.account.accessTokenSecret,
-    })
-    this.props.initTwitter(client)
-    console.log(Config)
-    console.log(Config.TWITTER_KEY)
-  }
 
   handleTabPress = (i) => {
     console.log(i)
+  }
+
+  handleComposeClick = () => {
+    this.props.toCompose()
   }
 
   render() {
@@ -78,6 +73,13 @@ export default class MainScreen extends BaseScreen {
         <ToolBar style={styles.toolBar} />
         <View style={styles.content}>
           { screens[this.props.selectedTab] }
+          <ActionButton
+            buttonColor="rgba(255,255,255,0.8)"
+            onPress={this.handleComposeClick}
+            useNativeFeedback={false}
+            offsetY={56}
+            icon={<Icon name="comment-processing-outline" size={30} color="black" />}
+          />
           <LinearGradient
             colors={['transparent', 'transparent', '#000000']}
             style={styles.tabBar}

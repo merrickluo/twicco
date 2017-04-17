@@ -11,7 +11,7 @@ import TweetList from './components/TweetList.js'
 
 @connect(state => {
   return {
-    account: state.app.account,
+    account: state.account,
     api: state.api.twitter,
   }
 })
