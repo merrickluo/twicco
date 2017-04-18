@@ -9,7 +9,7 @@ export default class TweetList extends React.Component {
     return (
       <View style={styles.list}>
         {this.props.tweets.map((tweet) => {
-          return <Tweet text={tweet.text} key={tweet.id} />
+          return <Tweet tweet={tweet} key={tweet.id} />
         })}
       </View>
     )
