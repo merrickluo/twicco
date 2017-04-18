@@ -5,40 +5,47 @@ import {
 } from 'react-native'
 
 import { connect } from 'react-redux'
+import { actions } from './reducers/timelines/home.js'
 
 import BaseScreen from './BaseScreen.js'
 import TweetList from './components/TweetList.js'
 
-@connect(state => {
+const mapStateToProps = (state) => {
   return {
-    account: state.account,
-    api: state.api.twitter,
+    timeline: state.timelines.home,
+    api: state.api.twitter.rest,
   }
-})
+}
+const mapDispatchToProps = (dispatch) => {
+  return {
+    reload: (tweets) => { dispatch({ type: actions.reload, tweets }) }
+  }
+}
+
+@connect(mapStateToProps, mapDispatchToProps)
 export default class HomeScreen extends BaseScreen {
   constructor() {
     super()
-    this.state = {
-      tweets: [],
-    }
   }
+
   componentDidMount() {
-    this.props.api.rest.get('statuses/home_timeline')
+    // do not reload if cache is here
+    // prevent over api limit
+    if (!this.props.timeline.tweets.length) {
+      const { api } = this.props
+      api.get('statuses/home_timeline')
         .then(result => {
-          console.log(result[0])
-          this.setState({
-            tweets: result,
-          })
+          this.props.reload(result)
         })
-        .catch(e => {
-          console.log(e)
-        })
+        .catch(e => { console.log(e) })
+    }
   }
 
   render() {
+    console.log(this.props)
     return (
       <View style={styles.container}>
-        <TweetList tweets={this.state.tweets} />
+        <TweetList tweets={this.props.timeline.tweets} />
       </View>
     )
   }
